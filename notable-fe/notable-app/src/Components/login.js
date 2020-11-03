@@ -4,7 +4,7 @@ import './Styles/login.css';
 function Login() {
   return (
     <div>
-      <h1 class="header">Notable</h1>
+      <h1>Notable</h1>
       <div class="login">
           Username:
         <input class="username" />
