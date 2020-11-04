@@ -7,6 +7,7 @@ body {
   font-size: calc(10px + 2vmin);
   color: white;
   padding-bottom: 10px;
+  margin: 0;
 }
 
 h1 {
@@ -45,6 +46,14 @@ nav.my-nav {
   height: 50px;
 }
 
+.header {
+  text-align: center;
+}
+
+.login {
+  text-align: center;
+}
+
 button.home-button {
   background-color: #4f70b4;
   border: none;
@@ -64,6 +73,46 @@ button.home-button {
   cursor: pointer;
   border-radius: 10px;
   box-shadow: 0 8px 16px 0 rgba(12, 11, 11, 0.2), 0 6px 20px 0 rgba(41, 58, 95, 0.664);
+}
+
+.greeting {
+  padding-left: 50px;
+}
+
+.search {
+  padding-right: 50px;
+}
+
+.noteSelection {
+  border: 2px solid black;
+  width: 150px;
+  height: 100px;
+  overflow: auto;
+  margin-left: 50px;
+  margin-top: 50px;
+}
+
+.newNote {
+  margin-top: 50px;
+  margin-left: 85px;
+}
+
+div.newNote {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.notePreview {
+  float: right;
+  width: 600px;
+  height: 400px;
+}
+
+.noteText {
+  width: 400px;
+  height: 500px;
+  margin-right: 100px;
 }
 
 @media only screen and (max-width: 700px) {
