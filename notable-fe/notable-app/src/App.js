@@ -16,7 +16,6 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/newNote" component={NewNote} />
       </Switch>
-
       
     </div>
     </Router>

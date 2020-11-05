@@ -11,14 +11,14 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema notable
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `notable` DEFAULT CHARACTER SET utf8 ;
+CREATE database IF NOT EXISTS `notable` DEFAULT CHARACTER SET utf8 ;
 USE `notable` ;
 
 -- -----------------------------------------------------
 -- Table `notable`.`user`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `notable`.`user` (
-  `userid` INT NOT NULL,
+  `userid` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   `firstname` VARCHAR(45) NULL,
@@ -31,7 +31,7 @@ ENGINE = InnoDB;
 -- Table `notable`.`data`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `notable`.`data` (
-  `dataid` INT NOT NULL,
+  `dataid` INT NOT NULL AUTO_INCREMENT,
   `user` INT NOT NULL,
   `date` DATETIME NULL,
   `name` VARCHAR(45) NOT NULL,
@@ -49,7 +49,7 @@ ENGINE = InnoDB;
 -- Table `notable`.`note`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `notable`.`note` (
-  `noteid` INT NOT NULL,
+  `noteid` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   `text` TEXT NOT NULL,
   `dataref` INT NOT NULL,
@@ -67,7 +67,7 @@ ENGINE = InnoDB;
 -- Table `notable`.`image`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `notable`.`image` (
-  `imageid` INT NOT NULL,
+  `imageid` INT NOT NULL AUTO_INCREMENT,
   `data` INT NOT NULL,
   `src` TEXT NOT NULL,
   `name` VARCHAR(45) NOT NULL,
