@@ -72,7 +72,10 @@ router.get('/@userid/notes', function (req, res) {
                         if (err){ res.status(404).json("Bad request"); }
                         else {
                             for(var i=0; i < userNotes.length; i++){
-
+                                conn.query('SELECT * FROM `note` WHERE `user` = ?', [responseObject.userid], function (err, userNotes, fields) {
+                                    if (err){ res.status(404).json("Bad request"); }
+                                    else {}
+                                    });
                             }
                         }
                     });
@@ -80,6 +83,5 @@ router.get('/@userid/notes', function (req, res) {
             });
             pool.releaseConnection(conn);
         }
-        
 })
 module.exports = router;
