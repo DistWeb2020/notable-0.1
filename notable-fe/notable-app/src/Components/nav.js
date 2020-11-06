@@ -8,7 +8,7 @@ function Nav() {
           <Link className="my-nav" to="/login" >
             <li>Login</li>
           </Link>
-          <Link className="my-nav" to="/main">
+          <Link className="my-nav" to="/home">
             <li>Main</li>
           </Link>
           <Link className="my-nav" to="/newNote">

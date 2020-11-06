@@ -6,19 +6,19 @@ function Main() {
 
 		<div>
 			<title>Main Page</title>
-			<h1 class="greeting">Hello User51654321321654654</h1>
+			<h1 className="greeting">Hello User51654321321654654</h1>
 
 			<table>
 				<tr>
 					<td>
 						<div>
-							<form class="search">
+							<form className="search">
 								Search:
     <input />
 							</form>
 
-							<div class="noteSelection">
-								<table class="noteList">
+							<div className="noteSelection">
+								<table className="noteList">
 									<tr>
 										<td>Note 1</td>
 									</tr>
@@ -43,7 +43,7 @@ function Main() {
 								</table>
 							</div>
 
-							<button class="newNote">New Note</button>
+							<button className="newNote">New Note</button>
 						</div>
 					</td>
 
@@ -51,7 +51,7 @@ function Main() {
 						<div>
 							Preview:
 <br />
-							<textarea class="notePreview"></textarea>
+							<textarea className="notePreview"></textarea>
 						</div>
 					</td>
 				</tr>

@@ -1,21 +1,55 @@
 ﻿import React from 'react';
 import './Styles/App.css';
+// import { appendScript, removeScript } from './Scripts/runScripts'
 
-function Login() {
-  return (
-    <div>
-      <h1>Notable</h1>
-      <div class="login">
+class Login extends React.Component {
+  // componentDidMount() {
+  //   appendScript( "/Scripts/checkLogin.js" );
+  // }
+
+  // componentWillUnmount() {
+  //   removeScript( "/Scripts/checkLogin.js" )
+  // }
+
+  verifyLogin() {
+    alert( "I'm logged in! \r\n(Not really though)" );
+  }
+
+
+  render() {
+    return (
+      <div>
+        <h1>Notable</h1>
+        <div className="login">
           Username:
-        <input class="username" />
+          <input className="username" />
           <br /><br />
-          Password:
-        <input class="password" />
+            Password:
+          <input className="password" />
           <br /><br />
-          <button>Login</button>
+          <button onClickCapture={ this.verifyLogin }>Login</button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
+
+// function Login() {
+//   return (
+//     <div>
+//       <ScriptTag isHydrating={true} type="text/javascript" src="some_script.js"/>
+//       <h1>Notable</h1>
+//       <div class="login">
+//           Username:
+//         <input class="username" />
+//           <br /><br />
+//           Password:
+//         <input class="password" />
+//           <br /><br />
+//           <button>Login</button>
+//       </div>
+//     </div>
+//   );
+// }
 
 export default Login;
