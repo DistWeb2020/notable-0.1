@@ -4,6 +4,8 @@ const router = express.Router();
 const path = require('path');
 var pool = require(path.resolve(__dirname, "./connection.js"));
 const bodyParser = require("body-parser");
+const cors = require('cors');
+router.use(cors);
 
 // //Middle ware that is specific to this router
 // router.use(function timeLog(req, res, next) {
@@ -42,6 +44,7 @@ router.get('/login', function (req, res) {
                         responseObject.notes = userNotes.map(v => Object.assign({}, v));
 
                         res.status(200).json(responseObject);
+                        res.send(json(responseObject));
                     });
                 }
             });

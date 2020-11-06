@@ -1,53 +1,48 @@
 ﻿import React from 'react';
 import './Styles/App.css';
+import {Redirect} from 'react-router-dom';
+import Main from './main';
 
 // const xhttp = new XMLHttpRequest();
 // var response = {};
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state={response:""};
+    this.state = {
+      notes:[]
+    };
   }
-  callRoutes() {
+  //verifies login information by doing a fetch (GET) to the server
+  async verifyLogin() {
+    console.log("I'm in callRoutes!");
     // obtain users username and password
-    var user = document.getElementById("username").innerHTML;
-    var password = document.getElementById("password").innerHTML;
-    var request = '{"username": '+ user + ',"password":' + password + '}';
+    var user = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+    var request = '?{"username": "'+ user + '","password": "' + password + '"}';
     // set up url to be sent for GET request
-    var url = "http://localhost:8000/routes?" + request;
-    fetch(url)
+    // needs "npm install --save cors" for cross origin request from React to Node
+    // need to say app.use(cors) in server.js?
+    var url = "http://localhost:8000/login" + request;
+    // console.log(url);
+    // do not actually need to include full url since you set up the proxy. Just need ?request
+    const response = await fetch(url);
+    console.log(response);
+    const json_response = response.json();
+    console.log(json_response);
+    json_response
+      .then(notes => {
+        this.setState({notes}, console.log('Notes fetched..', notes));
+        console.log(this.props.notes);
+        //send user to main page?
+      // return <Redirect><Main /></Redirect>;
+      } 
+      )
+      .catch((err, res) => {
+        console.log('Error!');
+        // console.log(res.json());
+        console.error(err);
+      }); // get the json from the response. Set up the state of the "response" prop to be whatever came from the res
     //need to find way to check for status first for conditional handling
-      .then(res => res.json()) // get the json from the response
-      .then(res => this.setState({response: res})); // set up the state of the "response" prop to be whatever came from the res
-  }
-  
-  
-  // verifies users login information
-  verifyLogin() {
-    // obtain users username and password
-    
-    // check it against usernames and passwords available in password
-    // use the callRoutes function to get response
-    
-
-    //Don't think I actually need this???
-    // xhttp.onreadystatechange = function() {
-    //   // if pass, send to main notes preview page
-    //   if(this.readyState == 4 && this.status ==200){
-    //     response = JSON.parse(this.responseText);
-
-        
-    //   }
-    //   // else, tell user the login does not exist and they should try again or signup!
-    //   else if(this.status==400){
-    //     var message = JSON.parse(this.response);
-    //     alert(message);
-    //   }
-    // };
-    // xhttp.open("GET", "/../../notable-be/src/server.js");
-    // xhttp.send();
-
-    alert( "I'm logged in! \r\n(Not really though)" );
   }
 
 // renders the login page
@@ -60,7 +55,7 @@ class Login extends React.Component {
           <input className="username" id="username"/>
           <br /><br />
             Password:
-          <input className="password" id="password" />
+          <input className="password" id="password" type="password" />
           <br /><br />
           <button onClick={ this.verifyLogin }>Login</button>
         </div>
