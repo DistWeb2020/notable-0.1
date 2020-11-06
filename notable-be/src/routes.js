@@ -51,4 +51,35 @@ router.get('/login', function (req, res) {
 });
 
 
+//notes view page
+router.get('/@userid/notes', function (req, res) {
+    if (err) { res.status(400).json("Could not connect to database, check server"); }
+
+        else {
+            responseObject = {};
+            responseObject.userid = req.params.userid;
+            
+            conn.query('SELECT * FROM `user` WHERE `username` = ? AND `password` = ?', [req.body.username, req.body.password], function (err, userObject, fields) {
+                if (err) { res.status(404).json("User does not exist"); }
+
+                else {
+                    responseObject.userid = userObject[0].userid;
+                    responseObject.firstname = userObject[0].firstname;
+                    responseObject.lastname = userObject[0].lastname;
+
+                    //return all notes for the user
+                    conn.query('SELECT * FROM `data` WHERE `user` = ?', [responseObject.userid], function (err, userNotes, fields) {
+                        if (err){ res.status(404).json("Bad request"); }
+                        else {
+                            for(var i=0; i < userNotes.length; i++){
+
+                            }
+                        }
+                    });
+                }
+            });
+            pool.releaseConnection(conn);
+        }
+        
+})
 module.exports = router;
