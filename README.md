@@ -11,7 +11,7 @@ make sure to run npm install after pulling from Git!
 
 
  /login endpoint
-REQUEST BODY EXAMPLE:
+REQUEST PARAMS EXAMPLE:
 {
     "username" : "hiya",
     "password" : "woah"
