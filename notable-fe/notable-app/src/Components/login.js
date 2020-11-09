@@ -2,6 +2,7 @@
 import './Styles/App.css';
 import {Redirect} from 'react-router-dom';
 import Main from './main';
+import Popup from 'reactjs-popup';
 
 const axios = require('axios');
 
@@ -11,7 +12,7 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      notes:[]
+      notes:{}
     };
   }
   //verifies login information by doing a fetch (GET) to the server
@@ -32,6 +33,7 @@ axios.get('http://localhost:8000/login', {params : {
   console.log(error);
 });
 
+  
 
     // console.log(response);
     // const json_response = response.json();
@@ -52,12 +54,25 @@ axios.get('http://localhost:8000/login', {params : {
     // //need to find way to check for status first for conditional handling
   }
 
+  close() {
+    document.getElementById('login').blur();
+    document.getElementById('login').style.display ='none';
+  }
+
 // renders the login page
   render() {
     return (
-      <div>
-        <h1>Notable</h1>
-        <div className="login">
+      <Popup
+    trigger={<button id="login-button" className="home-button"> Login </button>}
+    modal
+    nested
+  >
+    <div id="login" className="modal">
+        <button className="close" onClick={this.close}>
+          &times;
+        </button>
+        <div className="header">Notable</div>
+        <div className="login content">
           Username:
           <input className="username" id="username"/>
           <br /><br />
@@ -66,7 +81,18 @@ axios.get('http://localhost:8000/login', {params : {
           <br /><br />
           <button onClick={ this.verifyLogin }>Login</button>
         </div>
+        <button
+            className="button"
+            onClick={() => {
+              console.log('modal closed ');
+              this.close();
+            }}
+          >
+            close modal
+          </button>
       </div>
+  </Popup>
+      
     );
   }
 }

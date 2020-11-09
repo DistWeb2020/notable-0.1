@@ -5,8 +5,9 @@ function Nav() {
   return (
       <nav className="my-nav">
       <ul className="App-nav-links">
-          <Link className="my-nav" to="/login" >
-            <li>Login</li>
+        {/* Just using the welcome page as the login page */}
+          <Link className="my-nav" to="/" >
+            <li>Welcome(Login)</li>
           </Link>
           <Link className="my-nav" to="/home">
             <li>Main</li>

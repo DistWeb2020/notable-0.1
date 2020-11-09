@@ -8,6 +8,7 @@ body {
   color: white;
   padding-bottom: 10px;
   margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 h1 {
@@ -60,18 +61,44 @@ button.home-button {
   color: #61dafb;
   width: 300px;
   height: 75px;
-  padding: 15px 32px;
+  /* padding: 15px 32px; */
   text-align: center;
   align-items: center;
   justify-content: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  margin: 30px;
+  /* margin: 30px; */
   margin-right: 30vw;
   margin-left: 30vw;
   cursor: pointer;
   border-radius: 10px;
+  font-size: 3rem;
+  vertical-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 8px 16px 0 rgba(12, 11, 11, 0.2), 0 6px 20px 0 rgba(41, 58, 95, 0.664);
+}
+
+button.login-button {
+  background-color: #4f70b4;
+  border: none;
+  color: #61dafb;
+  width: 300px;
+  height: 75px;
+  /* padding: 15px 32px; */
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  /* margin: 30px; */
+  margin-top: 25vh;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 3rem;
+  vertical-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   box-shadow: 0 8px 16px 0 rgba(12, 11, 11, 0.2), 0 6px 20px 0 rgba(41, 58, 95, 0.664);
 }
 
@@ -120,4 +147,43 @@ div.newNote {
     margin-right: 10vw;
     margin-left: 10vw;
   }
+}
+
+.modal {
+  font-size: 12px;
+  background-color: #2b2e33;
+  padding: 50px;
+  box-shadow: 8px 10px 25px 8px rgba(12, 11, 11, 0.2), 8px 10px 25px 7px rgba(41, 58, 95, 0.664);
+  border-radius: 25px;
+  border-top-right-radius: 0px;
+}
+.modal > .header {
+  width: 100%;
+  border-bottom: 1px solid gray;
+  font-size: 18px;
+  text-align: center;
+  padding: 5px;
+}
+.modal > .content {
+  width: 100%;
+  padding: 10px 5px;
+}
+.modal > .actions {
+  width: 100%;
+  padding: 10px 5px;
+  margin: auto;
+  text-align: center;
+}
+.modal > .close {
+  cursor: pointer;
+  position: absolute;
+  display: block;
+  padding: 2px 5px;
+  line-height: 20px;
+  right: -7px;
+  top: -10px;
+  font-size: 24px;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #cfcece;
 }
