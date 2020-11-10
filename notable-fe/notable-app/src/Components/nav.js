@@ -2,19 +2,17 @@ import React from 'react';
 import './Styles/App.css';
 import {Link} from 'react-router-dom';
 function Nav() {
-  const navStyle = {
-    color: 'white'
-  };
   return (
-      <nav>
+      <nav className="my-nav">
       <ul className="App-nav-links">
-          <Link style={navStyle} to="/login" >
-            <li>Login</li>
+        {/* Just using the welcome page as the login page */}
+          <Link className="my-nav" to="/" >
+            <li>Welcome(Login)</li>
           </Link>
-          <Link style={navStyle} to="/main">
+          <Link className="my-nav" to="/home">
             <li>Main</li>
           </Link>
-          <Link style={navStyle} to="/newNote">
+          <Link className="my-nav" to="/newNote">
             <li>New Note</li>
           </Link>
         </ul>

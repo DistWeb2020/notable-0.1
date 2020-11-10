@@ -1,63 +1,63 @@
 ﻿import React from 'react';
-import './Styles/main.css';
+import './Styles/App.css';
 
 function Main() {
-    return (
+	return (
 
-    <div>
-        <title>Main Page</title>
-        <h1 class="greeting">Hello User51654321321654654</h1>
+		<div>
+			<title>Main Page</title>
+			<h1 className="greeting">Hello User51654321321654654</h1>
 
-        <table>
-            <tr>
-                <td>
-                    <div>
-                        <form class="search">
-                            Search:
+			<table>
+				<tr>
+					<td>
+						<div>
+							<form className="search">
+								Search:
     <input />
-                        </form>
+							</form>
 
-                        <div class="noteSelection">
-                            <table class="noteList">
-                                <tr>
-                                    <td>Note 1</td>
-                                </tr>
-                                <tr>
-                                    <td>Note 1</td>
-                                </tr>
-                                <tr>
-                                    <td>Note 1</td>
-                                </tr>
-                                <tr>
-                                    <td>Note 1</td>
-                                </tr>
-                                <tr>
-                                    <td>Note 1</td>
-                                </tr>
-                                <tr>
-                                    <td>Note 1</td>
-                                </tr>
-                                <tr>
-                                    <td>Note 1</td>
-                                </tr>
-                            </table>
-                        </div>
+							<div className="noteSelection">
+								<table className="noteList">
+									<tr>
+										<td>Note 1</td>
+									</tr>
+									<tr>
+										<td>Note 1</td>
+									</tr>
+									<tr>
+										<td>Note 1</td>
+									</tr>
+									<tr>
+										<td>Note 1</td>
+									</tr>
+									<tr>
+										<td>Note 1</td>
+									</tr>
+									<tr>
+										<td>Note 1</td>
+									</tr>
+									<tr>
+										<td>Note 1</td>
+									</tr>
+								</table>
+							</div>
 
-                        <button class="newNote">New Note</button>
-                    </div>
-                </td>
+							<button className="newNote">New Note</button>
+						</div>
+					</td>
 
-                <td>
-                    <div>
-                        Preview:
+					<td>
+						<div>
+							Preview:
 <br />
-                        <textarea class="notePreview"></textarea>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </div>
-    );
+							<textarea className="notePreview"></textarea>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	);
 }
 
 export default Main;
