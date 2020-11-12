@@ -38,9 +38,13 @@ router.get('/login', function (req, res) {
 
                     //return all notes for the user
                     conn.query('SELECT * FROM `data` WHERE `user` = ?', [responseObject.userid], function (err, userNotes, fields) {
+                        if(err){{ res.status(200).json(responseObject); }}
+                        else {
+
                         responseObject.notes = userNotes.map(v => Object.assign({}, v));
 
                         res.status(200).json(responseObject);
+                        }
                     });
                 }
             });
@@ -49,5 +53,23 @@ router.get('/login', function (req, res) {
     })
 });
 
+//get notes API
+router.get('/notes', function(req, res){
+    pool.getConnection(function (err, conn){
+        if (err) { res.status(400).json("Could not connect to database, check server"); }
+        else {
+            responseObject = {}
+            
+            conn.query('SELECT * FROM data LEFT JOIN note ON data.dataid = note.dataref LEFT JOIN image ON image.data = data.dataid WHERE data.user = ?', req.query.userid, function (err,userNotes, fields ) {
+                if(err){{ res.status(200).json(responseObject); }}
+                else {
+
+                    console.log(userNotes);
+                    res.status(200).json(userNotes);
+                    }
+            })
+        }
+    })
+})
 
 module.exports = router;
