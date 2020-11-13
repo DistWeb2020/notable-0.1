@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `notable`.`data` (
   `dataid` INT NOT NULL AUTO_INCREMENT,
   `user` INT NOT NULL,
   `date` DATETIME NULL,
-  `name` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(45) NOT NULL UNIQUE,
   PRIMARY KEY (`dataid`),
   INDEX `userid_idx` (`user` ASC) VISIBLE,
   CONSTRAINT `user`
@@ -43,16 +43,17 @@ CREATE TABLE IF NOT EXISTS `notable`.`data` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
+ALTER TABLE data AUTO_INCREMENT=100;
 
 -- -----------------------------------------------------
 -- Table `notable`.`note`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `notable`.`note` (
   `noteid` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL,
-  `text` TEXT NOT NULL,
+  `name` VARCHAR(45) NOT NULL UNIQUE,
+  `text` TEXT,
   `dataref` INT NOT NULL,
+  `img` VARCHAR(1000),
   PRIMARY KEY (`noteid`),
   INDEX `dataid_idx` (`dataref` ASC) VISIBLE,
   CONSTRAINT `dataref`
@@ -61,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `notable`.`note` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
+ALTER TABLE note AUTO_INCREMENT=200;
 
 -- -----------------------------------------------------
 -- Table `notable`.`image`
@@ -70,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `notable`.`image` (
   `imageid` INT NOT NULL AUTO_INCREMENT,
   `data` INT NOT NULL,
   `src` TEXT NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(45) NOT NULL UNIQUE,
   PRIMARY KEY (`imageid`),
   INDEX `dataid_idx` (`data` ASC) VISIBLE,
   CONSTRAINT `data`
@@ -79,8 +80,19 @@ CREATE TABLE IF NOT EXISTS `notable`.`image` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+ALTER TABLE image AUTO_INCREMENT=300;
 
+-- INSERT INTO note (name,text, dataref)
+-- VALUES ("water fall", "water fall dgvewiufhjcerfujdcfeuidjhvWB Sdkviujdvhndeiwoverdbv", 11);
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+-- INSERT INTO note (name,text, dataref)
+-- VALUES ("pond", "pond dgvewiufhjcerfujdcfeuidjhvWB Sdkviujdvhndeiwoverdbv", 12);
+
+-- INSERT INTO note (name,text, dataref)
+-- VALUES ("lake", "lakess dgvewiufhjcerfujdcfeuidjhvWB Sdkviujdvhndeiwoverdbv", 13);
+
+-- INSERT INTO image (data,src, name)
+-- VALUES(11, "https://www.thenationalnews.com/image/policy:1.915056:1569419566/Crater%20Lake.jpg?f=16x9&w=1200&$p$f$w=a8f7333", "She a lake");
+
+-- INSERT INTO image (data,src, name)
+-- VALUES(12, "https://thumbor.granitemedia.com/waterfalls/gQUVA404RQbOMivDxj7BwHGxgJM=/800x0/filters:format(webp):quality(80)/granite-web-prod/d8/82/d8821cc4b2dc4c71bab555d029834516.jpeg", "She a waterfall");
