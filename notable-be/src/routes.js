@@ -6,17 +6,12 @@ var pool = require(path.resolve(__dirname, "./connection.js"));
 const bodyParser = require("body-parser");
 router.use(bodyParser.json());
 
-router.use(function(req, res, next) {
+//CORS resolution
+router.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
-  });
-
-// // Define the home page route
-// router.get('/', function (req, res) {
-//     res.send('home');
-
-// });
+});
 
 //login API
 router.get('/login', function (req, res) {
@@ -38,12 +33,12 @@ router.get('/login', function (req, res) {
 
                     //return all notes for the user
                     conn.query('SELECT * FROM `data` WHERE `user` = ?', [responseObject.userid], function (err, userNotes, fields) {
-                        if(err){{ res.status(200).json(responseObject); }}
+                        if (err) { { res.status(404).json(responseObject); } }
                         else {
 
-                        responseObject.notes = userNotes.map(v => Object.assign({}, v));
+                            responseObject.notes = userNotes.map(v => Object.assign({}, v));
 
-                        res.status(200).json(responseObject);
+                            res.status(200).json(responseObject);
                         }
                     });
                 }
@@ -54,20 +49,49 @@ router.get('/login', function (req, res) {
 });
 
 //get notes API
-router.get('/notes', function(req, res){
-    pool.getConnection(function (err, conn){
+router.get('/notes', function (req, res) {
+    pool.getConnection(function (err, conn) {
         if (err) { res.status(400).json("Could not connect to database, check server"); }
         else {
             responseObject = {}
-            
-            conn.query('SELECT * FROM data LEFT JOIN note ON data.dataid = note.dataref LEFT JOIN image ON image.data = data.dataid WHERE data.user = ?', req.query.userid, function (err,userNotes, fields ) {
-                if(err){{ res.status(200).json(responseObject); }}
-                else {
-
-                    console.log(userNotes);
-                    res.status(200).json(userNotes);
-                    }
+            conn.query('SELECT * FROM data LEFT JOIN note ON data.dataid = note.dataref LEFT JOIN image ON image.data = data.dataid WHERE data.user = ?', req.query.userid, function (err, userNotes, fields) {
+                if (err) { { res.status(404).json(responseObject); } }
+                else { res.status(200).json(userNotes); }
             })
+            pool.releaseConnection(conn);
+        }
+    })
+})
+
+
+//create note
+router.post('/create', function (req, res) {
+    pool.getConnection(function (err, conn) {
+        if (err) { res.status(400).json("Could not connect to database, check server"); }
+        else {
+            conn.query('INSERT IGNORE INTO data (user, name, date) VALUES (?,?,?)', [req.body.user, req.body.name, req.body.date], function (err, results) {
+                if (err) { res.status(404).json(err.message); }
+                else {
+                    conn.query('INSERT IGNORE INTO note (name, text, dataref, img) VALUES (?,?,?,?)', [req.body.name, req.body.text, results.insertId, req.body.img], function (err2, note) {
+                        if (err2) { res.status(404).json(err2.message); }
+                        else {
+                            conn.query('SELECT * FROM data LEFT JOIN note ON data.dataid = note.dataref WHERE data.dataid = ?', [results.insertId], function (err3, insertedNote) {
+                                if (err3) { res.status(404).json(err3.message); }
+                                else {
+                                    if(insertedNote.length == 0){
+                                        res.status(200).json("This item already exists");
+                                    }
+                                    else{
+                                    res.status(200).json(insertedNote);
+                                    }
+                                }
+                            })
+                        }
+                    })
+                    }
+                    pool.releaseConnection(conn);
+            });
+
         }
     })
 })
