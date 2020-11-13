@@ -6,6 +6,12 @@ import Popup from 'reactjs-popup';
 
 const axios = require('axios');
 
+//Figure out how to use react-router to go to next page
+//Figure out how to use props to send data to that particular component you are creating. i.e. when you say <Main data={"someData": "data"} /> this.props.data.someData will be used to access that data in Main
+
+
+
+
 // const xhttp = new XMLHttpRequest();
 // var response = {};
 class Login extends React.Component {
