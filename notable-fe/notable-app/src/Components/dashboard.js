@@ -1,23 +1,24 @@
-﻿import React, {Component} from 'react';
+﻿import React, {Component, useContext, createContext, useState} from 'react';
+import { useHistory } from 'react-router-dom';
 import './Styles/App.css';
 
 const notes = [];
 
+// funtion componentDidMount() {
+// 	//look at data from login and put it in a nice little JSON
+// 	// console.log("userData", this.props.location.state.userData);
+// 	//grab data from notes API and put in JSON
+// }
 
 
-export default class Dashboard extends Component {
-	constructor(props) {
-		super(props);
-	}
+
+export default function Dashboard() {
+	let history = useHistory();
+	let auth = useAuth();
 
 
 
-	componentDidMount() {
-		//look at data from login and put it in a nice little JSON
-		// console.log("userData", this.props.location.state.userData);
-		//grab data from notes API and put in JSON
-	}
-	
+
 	//function search() //Allows user to search the notes
 	
 	//function populateScrollArea() //show list of notes use the notes API

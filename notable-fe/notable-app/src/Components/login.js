@@ -7,8 +7,7 @@ import Popup from 'reactjs-popup';
 const axios = require('axios');
 
 //Figure out how to use react-router to go to next page
-//Figure out how to use props to send data to that particular component you are creating. i.e. when you say <Main data={"someData": "data"} /> this.props.data.someData will be used to access that data in Main
-
+//Figure out how to use props to send data to that particular component you are creating. i.e. when you say <Dashboard data={"someData": "data"} /> this.props.data.someData will be used to access that data in Dashboard
 
 
 
@@ -29,15 +28,16 @@ class Login extends React.Component {
     var password = document.getElementById("password").value;
 
 
-axios.get('http://localhost:8000/login', {params : {
-  username: user,
-  password: password
-}})
-.then((response) => {
-  console.log(response);
-}, (error) => {
-  console.log(error);
-});
+    axios.get('http://localhost:8000/login', {params : {
+      username: user,
+      password: password
+    }})
+    .then((response) => {
+      //if there is no error, redirect the user to the dashboard
+      console.log(response);
+    }, (error) => {
+      console.log(error);
+    });
 
   
 
@@ -66,6 +66,7 @@ axios.get('http://localhost:8000/login', {params : {
   }
 
 // renders the login page
+// use conditional render to send you to a different page?
   render() {
     return (
       <Popup
@@ -85,6 +86,7 @@ axios.get('http://localhost:8000/login', {params : {
             Password:
           <input className="password" id="password" type="password" />
           <br /><br />
+          {/* You need to make this button send you to the dashboard when verifyLogin is succesful */}
           <button onClick={ this.verifyLogin }>Login</button>
         </div>
         <button
