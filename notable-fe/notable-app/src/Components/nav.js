@@ -9,8 +9,8 @@ function Nav() {
           <Link className="my-nav" to="/" >
             <li>Welcome(Login)</li>
           </Link>
-          <Link className="my-nav" to="/home">
-            <li>Main</li>
+          <Link className="my-nav" to="/dashboard">
+            <li>Dashboard</li>
           </Link>
           <Link className="my-nav" to="/newNote">
             <li>New Note</li>
