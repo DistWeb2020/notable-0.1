@@ -1,6 +1,8 @@
-﻿import React, {Component, useContext, createContext, useState} from 'react';
-import { useHistory } from 'react-router-dom';
+﻿import React from 'react';
+// import { useHistory } from 'react-router-dom';
 import './Styles/App.css';
+import Nav from './nav';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 const notes = [];
 
@@ -13,11 +15,9 @@ const notes = [];
 
 
 export default function Dashboard() {
-	let history = useHistory();
-	let auth = useAuth();
 
 
-
+console.log("I made it to the dashboard.");
 
 	//function search() //Allows user to search the notes
 	
@@ -27,13 +27,13 @@ export default function Dashboard() {
 	
 	//function moveToNewNote() //User wants to make a newnote
 
-	render(){
-		return (
+	return (
 
 			<div>
+				<Nav />
 				<title>Dashboard</title>
 				<h1 className="greeting">Hello User51654321321654654</h1>
-				<h1>Status: {this.props.loggedInStatus}</h1>
+				{/* <h1>Status: {this.props.loggedInStatus}</h1> */}
 				<table>
 					<tr>
 						<td>
@@ -84,6 +84,5 @@ export default function Dashboard() {
 				</table>
 			</div>
 		);
-	}
 	
 }

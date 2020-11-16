@@ -1,10 +1,15 @@
 ﻿import React from 'react';
 import './Styles/App.css';
+import Nav from './nav';
 
 function NewNote() {
   return (
     <div className="newNote">
-      <title>New Note</title>
+      <Nav />
+      <div className="container">
+          {/* Fix the styling later */}
+      </div>
+      <h1>New Note</h1>
       <table>
         <tr>
           <td>

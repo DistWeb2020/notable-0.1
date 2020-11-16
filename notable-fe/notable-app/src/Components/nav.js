@@ -6,9 +6,9 @@ function Nav() {
       <nav className="my-nav">
       <ul className="App-nav-links">
         {/* Just using the welcome page as the login page */}
-          <Link className="my-nav" to="/" >
-            <li>Welcome(Login)</li>
-          </Link>
+          {/* <Link className="my-nav" to="/" >
+            <li>Welcome</li>
+          </Link> */}
           <Link className="my-nav" to="/dashboard">
             <li>Dashboard</li>
           </Link>
