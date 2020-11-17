@@ -1,4 +1,4 @@
-﻿import React from 'react';
+﻿import React, {useState, useEffect} from 'react';
 // import { useHistory } from 'react-router-dom';
 import './Styles/App.css';
 import Nav from './nav';
@@ -12,9 +12,13 @@ const notes = [];
 // 	//grab data from notes API and put in JSON
 // }
 
+const Dashboard = ({user}) => {
+	const {userInfo, setUserInfo} = useState();
 
-
-export default function Dashboard() {
+	//Get current userInfo
+	useEffect(() => {
+		setUserInfo(user.current);
+	});
 
 
 console.log("I made it to the dashboard.");
@@ -22,17 +26,28 @@ console.log("I made it to the dashboard.");
 	//function search() //Allows user to search the notes
 	
 	//function populateScrollArea() //show list of notes use the notes API
-	
+	// let noteList = props.user.notes;
+
+	let populateScrollArea = () => {
+
+	}
+
 	//function populatePreview() //make the preview in to a nice little card
 	
 	//function moveToNewNote() //User wants to make a newnote
-
+	// let userInfo = props.user;
+	console.log(props.user);
+	// console.log(userInfo);
+	// let noteList = props.user.notes;
+	// console.log(noteList);
+	
+	
 	return (
 
 			<div>
 				<Nav />
 				<title>Dashboard</title>
-				<h1 className="greeting">Hello User51654321321654654</h1>
+				<h1 className="greeting">Hello {props.user.firstname} {props.user.lastname}!</h1>
 				{/* <h1>Status: {this.props.loggedInStatus}</h1> */}
 				<table>
 					<tr>
@@ -44,8 +59,16 @@ console.log("I made it to the dashboard.");
 								</form>
 	
 								<div className="noteSelection">
-									<table className="noteList">
-										<tr>
+									{/* {populateNoteList} */}
+									<table id="noteList" className="noteList">
+										{/* Table is populated using a mapping from noteList */}
+										{/* May want to make the element within the td a button instead of just text. Unless an onClick is available for td. */}
+										{props.user.notes.map(note =>(
+											<tr>
+												<td key={note.name}>{note.name}</td>
+											</tr>
+										))}
+										{/* <tr>
 											<td>Note 1</td>
 										</tr>
 										<tr>
@@ -65,7 +88,7 @@ console.log("I made it to the dashboard.");
 										</tr>
 										<tr>
 											<td>Note 1</td>
-										</tr>
+										</tr> */}
 									</table>
 								</div>
 	
@@ -86,3 +109,5 @@ console.log("I made it to the dashboard.");
 		);
 	
 }
+
+export default React.memo(Dashboard);

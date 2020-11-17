@@ -12,6 +12,7 @@ VALUES (1,'2020-11-03 02:00:00','Shopping List'),
 (4,'2020-11-07 07:22:22','My Note'),
 (5, '2020-11-13 16:04:00', 'Suit Ideas');
 
+
 INSERT INTO note (name, text, dataref)
 VALUES ('Shopping List_note', 'Eggs\r\nMilk\r\nBacon\r\nTitanium\r\nNth Metal\r\nCheese\r\n', 1),
 ('Reading List_note', 'The Detective''s Gambit\r\nTower of Babel\r\nBatman Beyond\r\nBatman: Year One\r\n', 2),
@@ -25,3 +26,17 @@ VALUES (1,'/img/jl.jpg','Shopping List_image'),
 (3,'/img/andFriends.jpg','Call Your Friends_image'),
 (4,'/img/myImage.jpg','My Note_image'),
 (5,'/img/risingSuit.jpg','Suit Ideas_image');
+
+
+
+INSERT INTO data (user, date, name)
+VALUES
+(5, '2020-11-13 16:04:00', 'Gadget Ideas');
+
+INSERT INTO note (name, text, dataref)
+VALUES
+('Gadget Ideas_note', 'Hmmm, what about electric tripwires! Or point contacts for precise venom blasts?! Gotta tell Ganke.', 5);
+
+INSERT INTO image (data, src, name)
+VALUES
+(5,'/img/venomBlastGadgets.jpg','Gadget Ideas_image');

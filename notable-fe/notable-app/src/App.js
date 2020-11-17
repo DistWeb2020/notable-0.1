@@ -1,4 +1,4 @@
-import React, {useContext, createContext, useState} from 'react';
+import React, {useContext, createContext, useState, useEffect, useRef} from 'react';
 import {Redirect, Link, Switch, Route, useHistory, useLocation, BrowserRouter as Router} from 'react-router-dom';
 import './Components/Styles/App.css';
 import Dashboard from './Components/dashboard';
@@ -9,8 +9,21 @@ import Message from './Components/message';
 
 const axios = require('axios');
 
+//Figure out how to make sure this updates when routed to Dashboard
+//Turn it into a state somehow and pass it back to Welcome after Login has finished
+let userInfo = "";
 
 export default function Welcome() {
+  const [userInfo, setUserInfo] = useState();
+
+  //Used as a reference within login
+  const loginState = useRef();
+
+  //How do I make sure this runs before the redirect happens
+  useEffect(() => {
+    setUserInfo(loginState.current);
+  }, [loginState]);
+
   // renders the login page
   return (
     <div className="App">
@@ -21,10 +34,13 @@ export default function Welcome() {
             <AuthButton />
             <Switch>
               <Route path="/login">
-                <LoginPage />
+                <LoginPage userRef={loginState} />
               </Route>
               <PrivateRoute path="/dashboard">
-                <Dashboard />
+                {/* The Dashboard component is passed a prompt that is assigned in the LoginPage function */}
+                {/* <Dashboard user={(userInfo===""?{"firstname": "me", "lastname":"not me","notes": [{"name": "fake1"}, {"name": "fake2"}] }:userInfo)}/> */}
+                <Dashboard user={userInfo}/>
+                {/* <Dashboard /> */}
               </PrivateRoute>
               <Route path="/newNote">
                 <NewNote />
@@ -77,9 +93,10 @@ export default function Welcome() {
     // what about a password? or do you check for the user and do all the setUser and user afterward
     const [user, setUser] = useState(null);
   
-    const signin = cb => {
+    const signin = (user,cb) => {
       return fakeAuth.signin(() => {
-        setUser("user");
+        setUser(user);
+        console.log(user);
         cb();
       });
     };
@@ -161,7 +178,13 @@ export default function Welcome() {
   
   
   //In your page the Login
-  function LoginPage() {
+  LoginPage = ({userRef}) => {
+    const [state, setState] = useState();
+    //Updates useRef with the userInfo...hopefully
+    useEffect(() => {
+      userRef.current = state;
+    }, [state]);
+
     let history = useHistory();
     let location = useLocation();
     let auth = useAuth();
@@ -172,7 +195,9 @@ export default function Welcome() {
       // obtain users username and password
       var user = document.getElementById("username").value;
       var password = document.getElementById("password").value;
-  
+      
+      // TODO: Make sure to validate user and password before sending them to MySQL
+
       // Make sure user and password or not empty or something else weird
       // Use the message.js once that has been made and tested.
       if(user.length!==0) {
@@ -183,9 +208,11 @@ export default function Welcome() {
           }})
           .then((response) => {
             //if there is no error, redirect the user to the dashboard
-            console.log(response);
-            auth.signin(() => {
-              history.replace(from);
+            // console.log(response.data);
+            setState(response.data); //Set the state of the userInfo that will be passed back up to Welcome
+            console.log(state);
+            auth.signin(user, () => {
+              history.replace(from); //Can I just return a redirect here?
             });
           }, (error) => {
             // Use message.js to display some error message to the user telling them to try again or signup
