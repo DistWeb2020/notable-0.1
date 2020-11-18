@@ -22,7 +22,7 @@ export default function Welcome() {
   //How do I make sure this runs before the redirect happens
   useEffect(() => {
     setUserInfo(loginState.current);
-  }, [loginState]);
+  }, [loginState.current]);
 
   // renders the login page
   return (
