@@ -1,141 +1,31 @@
-﻿// NOT BEING USED! Moved to welcome.js
+﻿import React from 'react';
+import {useHistory} from 'react-router-dom';
+import {useLogin, useUpdateLogin} from './loginContext';
 
-
-
-
-// import React from 'react';
-// import './Styles/App.css';
-// import {useHistory, useLocation} from 'react-router-dom';
-// import {Redirect} from 'react-router-dom';
-// import Main from './main';
-// import Popup from 'reactjs-popup';
-
-// const axios = require('axios');
-
-// //Figure out how to use react-router to go to next page
-// //Figure out how to use props to send data to that particular component you are creating. i.e. when you say <Dashboard data={"someData": "data"} /> this.props.data.someData will be used to access that data in Dashboard
-
-// // Stolen from example
-// let history = useHistory();
-// let location = useLocation();
-// let auth = useAuth();
-
-// let { from } = location.state || { from: { pathname: "/" } };
-// let login = () => {
-//   auth.signin(() => {
-//     history.replace(from);
-//   });
-// };
-
-// // const xhttp = new XMLHttpRequest();
-// // var response = {};
-// class Login extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       notes:{}
-//     };
-//   }
-
-
-//   //verifies login information by doing a fetch (GET) to the server
-//   async verifyLogin() {
-//     console.log("I'm in callRoutes!");
-//     // obtain users username and password
-//     var user = document.getElementById("username").value;
-//     var password = document.getElementById("password").value;
-
-
-//     axios.get('http://localhost:8000/login', {params : {
-//       username: user,
-//       password: password
-//     }})
-//     .then((response) => {
-//       //if there is no error, redirect the user to the dashboard
+export default function Login() {
+  const permit = useLogin();
+  const togglePermit = useUpdateLogin();
   
-//   // Borrowed code from example to login user
-//       // let history = useHistory();
-//       // let location = useLocation();
-//       // let auth = useAuth();
-
-//       // let { from } = location.state || { from: { pathname: "/" } };
-//       // let login = () => {
-//       //   auth.signin(() => {
-//       //     history.replace(from);
-//       //   });
-//       // };
-//       console.log(response);
-//     }, (error) => {
-//       // Use message.js to display some error message to the user telling them to try again or signup
-//       console.log(error);
-//     });
-
+  const history = useHistory(); //Could this be made in ThemeContext?
   
+  const login = () => {
+    // Check if user is in db
+    //If they are use togglePermit to change it to true 
+    //and send them to the Dashboard.
+    if(permit){
+      let path= '/dashboard';
+      history.push(path);
+    }
+  }
 
-//     // console.log(response);
-//     // const json_response = response.json();
-//     // console.log(json_response);
-//     // json_response
-//     //   .then(notes => {
-//     //     this.setState({notes}, console.log('Notes fetched..', notes));
-//     //     console.log(this.props.notes);
-//     //     //send user to main page?
-//     //   // return <Redirect><Main /></Redirect>;
-//     //   } 
-//     //   )
-//     //   .catch((err, res) => {
-//     //     console.log('Error!');
-//     //     // console.log(res.json());
-//     //     console.error(err);
-//     //   }); // get the json from the response. Set up the state of the "response" prop to be whatever came from the res
-//     // //need to find way to check for status first for conditional handling
-//   }
 
-//   close() {
-//     document.getElementById('login').blur();
-//     document.getElementById('login').style.display ='none';
-//   }
-
-// // renders the login page
-// // use conditional render to send you to a different page?
-//   render() {
-//     return (
-//       <Popup
-//     trigger={<button id="login-button" className="home-button"> Login </button>}
-//     modal
-//     nested
-//   >
-//     <div id="login" className="modal">
-//         <button className="close" onClick={this.close}>
-//           &times;
-//         </button>
-//         <div className="header">Notable</div>
-//         <div className="login content">
-//           Username:
-//           <input className="username" id="username"/>
-//           <br /><br />
-//             Password:
-//           <input className="password" id="password" type="password" />
-//           <br /><br />
-//           {/* You need to make this button send you to the dashboard when verifyLogin is succesful */}
-//           {/* <button onClick={ this.verifyLogin }>Login</button> */}
-//           <button onClick={ login }>Login</button>
-//         </div>
-//         <button
-//             className="button"
-//             onClick={() => {
-//               console.log('modal closed ');
-//               this.close();
-//             }}
-//           >
-//             close modal
-//           </button>
-//       </div>
-//   </Popup>
-      
-//     );
-//   }
-// }
-
-// // sets default export to Login
-// export default Login;
+  return permit ?(
+    <div>
+      {/* Send them to dashboard */}
+    </div>
+  ):(
+    <div>
+      {/* Show login button */}
+    </div>
+  );
+}

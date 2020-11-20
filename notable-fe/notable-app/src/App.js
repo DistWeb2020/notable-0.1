@@ -12,7 +12,7 @@ const axios = require('axios');
 
 // Make it all functional again and break it down to be simpler
 
-
+//This is going to be cut down to be really simple due to useContext
 
 
 
