@@ -1,26 +1,23 @@
 ﻿import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import './Styles/App.css';
 import Nav from './nav';
+import NewNote from './Components/newNote';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import { Component } from 'react';
+import { useLogin, useUserInfo } from './loginContext';
 
-// funtion componentDidMount() {
+// function componentDidMount() {
 // 	//look at data from login and put it in a nice little JSON
 // 	// console.log("userData", this.props.location.state.userData);
 // 	//grab data from notes API and put in JSON
 // }
 
-export default class Dashboard extends Component {
-	constructor(props) {
-		super(props) 
-			this.state = {
-				notes: [],
-				noteList: this.props.userInfo.user.notes
-			}
-	}
-
-	render(){
+export default function Dashboard() {
+	// const user = props.history.location.state;
+	const user = useUserInfo(); //Use this or the state that is passed form the redirect?
+	const permit = useLogin(); //Should use only if the user for some reason can still get to this route if they just typed it in, which is likely
+	// const history = useHistory(); //
 
   console.log("I made it to the dashboard.");
 
@@ -45,14 +42,21 @@ export default class Dashboard extends Component {
 		//Redirect
 	}
 
-	console.log(this.state.noteList);
+	// console.log(user.notes);
 	
-	return (
+	return permit? (
+		<div>
+			{/* Redirect to Welcome with Login */}
+			<Redirect to={{
+				pathname='/'
+			}}/>
+		</div>
+	):(
 
 			<div>
 				<Nav />
 				<title>Dashboard</title>
-				<h1 className="greeting">Hello {this.props.user.firstname} {this.props.user.lastname}!</h1>
+				<h1 className="greeting">Hello {user.firstname} {user.lastname}!</h1>
 				{/* <h1>Status: {this.props.loggedInStatus}</h1> */}
 				<table>
 					<tr>
@@ -68,7 +72,7 @@ export default class Dashboard extends Component {
 									<table id="noteList" className="noteList">
 										{/* Table is populated using a mapping from noteList */}
 										{/* May want to make the element within the td a button instead of just text. Unless an onClick is available for td. */}
-										{this.state.noteList.map(note =>(
+										{user.notes.map(note =>(
 											<tr>
 												<td key={note.name}>{note.name}</td>
 											</tr>
@@ -112,5 +116,4 @@ export default class Dashboard extends Component {
 				</table>
 			</div>
 		);
-  }
 }
