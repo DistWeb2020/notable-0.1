@@ -1,10 +1,9 @@
-﻿import React, {useState, useEffect} from 'react';
-// import { useHistory } from 'react-router-dom';
+﻿import React from 'react';
+import { useHistory } from 'react-router-dom';
 import './Styles/App.css';
 import Nav from './nav';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-
-const notes = [];
+import { Component } from 'react';
 
 // funtion componentDidMount() {
 // 	//look at data from login and put it in a nice little JSON
@@ -12,42 +11,48 @@ const notes = [];
 // 	//grab data from notes API and put in JSON
 // }
 
-const Dashboard = ({user}) => {
-	const {userInfo, setUserInfo} = useState();
+export default class Dashboard extends Component {
+	constructor(props) {
+		super(props) 
+			this.state = {
+				notes: [],
+				noteList: this.props.userInfo.user.notes
+			}
+	}
 
-	//Get current userInfo
-	useEffect(() => {
-		setUserInfo(user.current);
-	});
+	render(){
 
-
-console.log("I made it to the dashboard.");
+  console.log("I made it to the dashboard.");
 
 	//function search() //Allows user to search the notes
-	
-	//function populateScrollArea() //show list of notes use the notes API
-	// let noteList = props.user.notes;
-
-	let populateScrollArea = () => {
-
+	var search = () => {
+		//First Idea:
+		//Do a Query in database
+		//With the response update the notes and noteList states with searchResults
+		//Hopefully page updates because of change in state
 	}
 
 	//function populatePreview() //make the preview in to a nice little card
-	
+  var populatePreview = () => {
+	//Send the paramaters to /login
+	//parameter would probably be userId (check postman to be sure), but it would be taken from the prop sent from loginPage
+
+	//Plop note text in text area
+}
+
 	//function moveToNewNote() //User wants to make a newnote
-	// let userInfo = props.user;
-	console.log(props.user);
-	// console.log(userInfo);
-	// let noteList = props.user.notes;
-	// console.log(noteList);
-	
+	var moveToNewNote = () => {
+		//Redirect
+	}
+
+	console.log(this.state.noteList);
 	
 	return (
 
 			<div>
 				<Nav />
 				<title>Dashboard</title>
-				<h1 className="greeting">Hello {props.user.firstname} {props.user.lastname}!</h1>
+				<h1 className="greeting">Hello {this.props.user.firstname} {this.props.user.lastname}!</h1>
 				{/* <h1>Status: {this.props.loggedInStatus}</h1> */}
 				<table>
 					<tr>
@@ -63,7 +68,7 @@ console.log("I made it to the dashboard.");
 									<table id="noteList" className="noteList">
 										{/* Table is populated using a mapping from noteList */}
 										{/* May want to make the element within the td a button instead of just text. Unless an onClick is available for td. */}
-										{props.user.notes.map(note =>(
+										{this.state.noteList.map(note =>(
 											<tr>
 												<td key={note.name}>{note.name}</td>
 											</tr>
@@ -100,14 +105,12 @@ console.log("I made it to the dashboard.");
 							<div>
 								Preview:
 	<br />
-								<textarea className="notePreview"></textarea>
+								<textarea id="notePreview" className="notePreview"></textarea>
 							</div>
 						</td>
 					</tr>
 				</table>
 			</div>
 		);
-	
+  }
 }
-
-export default React.memo(Dashboard);

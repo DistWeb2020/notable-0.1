@@ -6,9 +6,9 @@ function NewNote() {
   return (
     <div className="newNote">
       <Nav />
-      <div className="container">
+      {/* <div className="container">
           {/* Fix the styling later */}
-      </div>
+      {/* </div> */}
       <h1>New Note</h1>
       <table>
         <tr>
