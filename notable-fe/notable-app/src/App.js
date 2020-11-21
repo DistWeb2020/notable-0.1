@@ -25,13 +25,20 @@ function App() {
 }
 
 function newNote() {
+  var user;
+  var name;
+  var text;
+  var date;
+  var dataId = null;
+
 
   let save = () => {
-    var user = 1;
-    var name = document.getElementById("name").value;
-    var text = document.getElementById("noteText").value;
+    //Waiting on merge to determine how we're keeping track of current logged in user
+    user = 1;
+    name = document.getElementById("name").value;
+    text = document.getElementById("noteText").value;
     //Get current date
-    var date = new Date();
+    date = new Date();
     var dd = String(date.getDate()).padStart(2, '0');
     var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = date.getFullYear();
@@ -50,7 +57,7 @@ function newNote() {
       })
 
     } else {
-      alert("Please give your note  name")
+      alert("Please give your note a name")
     }
   }
   
