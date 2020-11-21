@@ -78,7 +78,7 @@ router.post('/create', function (req, res) {
                                 if (err3) { res.status(404).json(err3.message); }
                                 else {
                                     if(insertedNote.length == 0){
-                                        res.status(200).json("This item already exists");
+                                      res.status(200).json("This item already exists");
                                     }
                                     else{
                                     res.status(200).json(insertedNote);

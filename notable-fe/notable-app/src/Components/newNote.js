@@ -10,7 +10,7 @@ return (
             <td>
                 <input id="name" placeholder="Title" />
                 <br /><br />
-                <textarea class="noteText" placeholder="Write something... notable"></textarea>
+                <textarea id="noteText" class="noteText" placeholder="Write something... notable"></textarea>
             </td>
 
             <td id="lside">
