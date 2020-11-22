@@ -1,17 +1,20 @@
 ﻿import React from 'react';
+import Dashboard from './dashboard';
+import Popup from 'reactjs-popup';
+import './Styles/App.css';
 import {Redirect, useHistory} from 'react-router-dom';
 import {useLogin, useUpdateLogin, useUpdateUserInfo, useUserInfo} from './loginContext';
 const axios = require('axios');
 
-import Dashboard from './Components/dashboard';
-import Popup from 'reactjs-popup';
-import './Components/Styles/App.css';
+
 
 export default function Login() {
-  const permit = useLogin();
-  const togglePermit = useUpdateLogin();
-  const userInfo = useUserInfo();
-  const setUserInfo = useUpdateUserInfo();
+  //Permit and togglePermit are used for access control
+  var permit = useLogin();
+  var togglePermit = useUpdateLogin();
+  //Used to store the userInfo in a state. May do this differently though.
+  var userInfo = useUserInfo();
+  // const setUserInfo = useUpdateUserInfo();
   
   const history = useHistory(); //Could this be made in ThemeContext?
   
@@ -34,14 +37,16 @@ export default function Login() {
         }})
         .then((response) => {
           //Put response.data in the userInfo state since the user is in the db
-          setUserInfo(response.data);
+          // setUserInfo(response.data);
+          userInfo = response.data;
+          console.log(response.data);
           console.log(userInfo);
           //Use togglePermit to change it to true 
-          togglePermit();
+          permit = togglePermit;
           //and send them to the Dashboard.
           if(permit){
             let path= '/dashboard';
-            history.push(path);
+            history.push({pathname:path, state:{user:userInfo}});
           }
         }, (error) => {
           // Use message.js to display some error message to the user telling them to try again or signup

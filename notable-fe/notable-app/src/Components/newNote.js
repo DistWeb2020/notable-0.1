@@ -2,7 +2,7 @@
 import './Styles/App.css';
 import Nav from './nav';
 
-function NewNote() {
+function NewNote(props) {
   return (
     <div className="newNote">
       <Nav />

@@ -12,7 +12,7 @@ export function useLogin() {
 }
 
 export function useUpdateLogin() {
-  return useContext(updateLoginContext)
+  return useContext(UpdateLoginContext)
 }
 
 export function useUserInfo() {
@@ -28,7 +28,8 @@ export function LoginProvider({children}) {
   const [userInfo, setUserInfo] = useState({});
 
   function togglePermit() {
-    setPermit(prevPermit => !prevPermit)
+    setPermit(prevPermit => !prevPermit);
+    return permit;
   }
 
   // function updateUserInfo(user) {

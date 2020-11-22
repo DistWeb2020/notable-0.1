@@ -2,7 +2,7 @@ import React from 'react'
 import {Redirect, useHistory} from 'react-router-dom';
 import {useLogin, useUpdateLogin, useUserInfo, useUpdateUserInfo} from './loginContext';
 
-import NavNLI from './Components/nav-notLoggedIn';
+import NavNLI from './nav-notLoggedIn';
 import Login from './login';
 
 
@@ -13,12 +13,13 @@ export default function Welcome() {
   
   const history = useHistory(); //Could this be made in ThemeContext?
   
-  const sendToLogin = () => {
-    if(!permit){
-      let path= '/login';
-      history.push(path);
-    }
-  }
+  //Actually probably don't need this
+  // const sendToLogin = () => {
+  //   if(!permit){
+  //     let path= '/login';
+  //     history.push(path);
+  //   }
+  // }
 
 
   return permit?(
@@ -37,8 +38,8 @@ export default function Welcome() {
       Make your notes more notable!
       <br/><br/>Login below!<br/><br/>
       </h3>
-      <Redirect to="/login" />
-      {/* <Login /> */}
+      {/* <Redirect to="/login" /> */}
+      <Login />
     </div>
   )
 }

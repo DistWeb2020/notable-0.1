@@ -2,9 +2,9 @@
 import { Redirect, useHistory } from 'react-router-dom';
 import './Styles/App.css';
 import Nav from './nav';
-import NewNote from './Components/newNote';
+import NewNote from './newNote';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import { Component } from 'react';
+import { Component, useState } from 'react';
 import { useLogin, useUserInfo } from './loginContext';
 
 // function componentDidMount() {
@@ -13,13 +13,15 @@ import { useLogin, useUserInfo } from './loginContext';
 // 	//grab data from notes API and put in JSON
 // }
 
-export default function Dashboard() {
+export default function Dashboard(props) {
 	// const user = props.history.location.state;
-	const user = useUserInfo(); //Use this or the state that is passed form the redirect?
+	const [user, setUser] = useState(props.location.state.user); //Use this or the state that is passed form the redirect?
 	const permit = useLogin(); //Should use only if the user for some reason can still get to this route if they just typed it in, which is likely
 	// const history = useHistory(); //
 
-  console.log("I made it to the dashboard.");
+	console.log("I made it to the dashboard.");
+	console.log(user);
+	console.log(props.location.state.user);
 
 	//function search() //Allows user to search the notes
 	var search = () => {
@@ -48,7 +50,7 @@ export default function Dashboard() {
 		<div>
 			{/* Redirect to Welcome with Login */}
 			<Redirect to={{
-				pathname='/'
+				pathname:'/'
 			}}/>
 		</div>
 	):(
