@@ -1,7 +1,7 @@
 import React from 'react';
 import './Styles/App.css';
 import {Link} from 'react-router-dom';
-function Nav() {
+function Nav(props) {
   return (
       <nav className="my-nav">
       <ul className="App-nav-links">
@@ -9,10 +9,16 @@ function Nav() {
           {/* <Link className="my-nav" to="/" >
             <li>Welcome</li>
           </Link> */}
-          <Link className="my-nav" to="/dashboard">
+          <Link className="my-nav" to={{
+            pathname: "/dashboard",
+            state: {user: props.user}
+          }}>
             <li>Dashboard</li>
           </Link>
-          <Link className="my-nav" to="/newNote">
+          <Link className="my-nav" to={{
+            pathname: "/newNote",
+            state: {user: props.user}
+          }}>
             <li>New Note</li>
           </Link>
         </ul>

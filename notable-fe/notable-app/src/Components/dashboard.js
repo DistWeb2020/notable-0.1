@@ -6,6 +6,7 @@ import NewNote from './newNote';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import { Component, useState } from 'react';
 import { useLogin, useUserInfo } from './loginContext';
+import { useEffect } from 'react';
 
 // function componentDidMount() {
 // 	//look at data from login and put it in a nice little JSON
@@ -18,6 +19,10 @@ export default function Dashboard(props) {
 	const [user, setUser] = useState(props.location.state.user); //Use this or the state that is passed form the redirect?
 	const permit = useLogin(); //Should use only if the user for some reason can still get to this route if they just typed it in, which is likely
 	// const history = useHistory(); //
+
+	// useEffect(() => {
+	// 	const [user, setUser] = useState(props.location.state.user);
+	// },[permit])
 
 	console.log("I made it to the dashboard.");
 	console.log(user);
@@ -55,8 +60,8 @@ export default function Dashboard(props) {
 		</div>
 	):(
 
-			<div>
-				<Nav />
+			<div className="dashboard">
+				<Nav user={user} />
 				<title>Dashboard</title>
 				<h1 className="greeting">Hello {user.firstname} {user.lastname}!</h1>
 				{/* <h1>Status: {this.props.loggedInStatus}</h1> */}
@@ -79,27 +84,6 @@ export default function Dashboard(props) {
 												<td key={note.name}>{note.name}</td>
 											</tr>
 										))}
-										{/* <tr>
-											<td>Note 1</td>
-										</tr>
-										<tr>
-											<td>Note 1</td>
-										</tr>
-										<tr>
-											<td>Note 1</td>
-										</tr>
-										<tr>
-											<td>Note 1</td>
-										</tr>
-										<tr>
-											<td>Note 1</td>
-										</tr>
-										<tr>
-											<td>Note 1</td>
-										</tr>
-										<tr>
-											<td>Note 1</td>
-										</tr> */}
 									</table>
 								</div>
 	

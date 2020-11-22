@@ -1,11 +1,13 @@
 ﻿import React from 'react';
 import './Styles/App.css';
 import Nav from './nav';
+import { useState } from 'react';
 
 function NewNote(props) {
+  const [user, setUser] = useState(props.location.state.user);
   return (
     <div className="newNote">
-      <Nav />
+      <Nav user={user}/>
       {/* <div className="container">
           {/* Fix the styling later */}
       {/* </div> */}
