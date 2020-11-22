@@ -25,15 +25,42 @@ function App() {
 }
 
 function newNote() {
-  var user;
+  //Waiting on merge to determine how we're keeping track of current logged in user
+  var user = 1;
   var name;
   var text;
   var date;
-  var dataId = null;
+  //noteId needs to be passed in if updating a note. Make noteId -1 if new note
+  var noteId = 213;
 
+  var notes;
+
+  if (noteId != -1) {
+    var index;
+
+    axios.get('http://localhost:8000/notes', {params : {
+      userid: 1
+    }})
+    .then((response) => {
+      console.log(response);
+      notes = response.data;
+
+      for (var i = 0; i < notes.length; i++) {
+        if(notes[i].noteid == noteId) {
+          index = i;
+        }
+      } 
+  
+      document.getElementById("name").value = notes[index].name;
+      document.getElementById("noteText").value = notes[index].text;
+
+    }, (error) => {
+      // Use message.js to display some error message to the user telling them to try again or signup
+      console.log(error);
+    });
+  }
 
   let save = () => {
-    //Waiting on merge to determine how we're keeping track of current logged in user
     user = 1;
     name = document.getElementById("name").value;
     text = document.getElementById("noteText").value;
@@ -44,8 +71,10 @@ function newNote() {
     var yyyy = date.getFullYear();
     date = mm + '/' + dd + '/' + yyyy;
     
-    if (name.length !== 0) {
-        axios.post('http://localhost:8000/create', {
+    if (name.length == 0) {
+      alert("Please give your note a name")
+    } else if (noteId == -1){
+      axios.post('http://localhost:8000/create', {
         user: user,
         name: name,
         text: text,
@@ -55,9 +84,14 @@ function newNote() {
       .then((response) => {
         console.log(response);
       })
-
     } else {
-      alert("Please give your note a name")
+      axios.post('http://localhost:8000/update', {
+        noteid: noteId,
+        text: text
+      })
+      .then((response) => {
+        console.log(response);
+      })
     }
   }
   
