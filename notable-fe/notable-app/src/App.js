@@ -94,6 +94,23 @@ function newNote() {
       })
     }
   }
+
+  let changeTextVisual = () => {
+    var fontVal = "font-family:" + document.getElementById("fontSelect").value + "; ";
+    var sizeVal = "font-size:" + document.getElementById("sizeSelect").value + "px;";
+
+    var allChanges = fontVal + sizeVal;
+
+    if(document.getElementById("bold").checked == true) {
+      allChanges += " font-weight:bold;";
+    }
+
+    if(document.getElementById("italics").checked == true) {
+      allChanges += " font-style:italic;";
+    }
+
+    document.getElementById("noteText").style = allChanges;
+  }
   
   return (
     <div>
@@ -103,12 +120,12 @@ function newNote() {
             <td>
                 <input id="name" placeholder="Title" />
                 <br /><br />
-                <textarea id="noteText" class="noteText" placeholder="Write something... notable"></textarea>
+                <textarea id="noteText" class="noteText" placeholder="Write something... notable" stlye=""></textarea>
             </td>
 
             <td id="lside">
                 Fonts:
-                <select>
+                <select id="fontSelect" onChange={ changeTextVisual }>
                     <option value="Times">Times</option>
                     <option value="Georgia">Georgia</option>
                     <option value="Arial">Arial</option>
@@ -117,17 +134,17 @@ function newNote() {
                 <br /><br />
 
                 Size:
-                <select>
+                <select id="sizeSelect" onChange={ changeTextVisual }>
                     <option value="11">11</option>
                     <option value="12">12</option>
                     <option value="15">15</option>
                     <option value="20">20</option>
                 </select>
                 <br /><br />
-                <input type="checkbox" id="bold" />
+                <input type="checkbox" id="bold" onChange={ changeTextVisual }/>
                 <label for="bold">Bold</label>
                 <br /><br />
-                <input type="checkbox" id="italics" />
+                <input type="checkbox" id="italics" onChange={ changeTextVisual }/>
                 <label for="bold">Italics</label>
                 <br /><br />
                 <button onClick={ save }>Save</button>
