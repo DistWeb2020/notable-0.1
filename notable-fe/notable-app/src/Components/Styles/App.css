@@ -26,15 +26,72 @@
 
 .App-link {
   color: #61dafb;
+  width: 300px;
+  height: 75px;
+  /* padding: 15px 32px; */
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  /* margin: 30px; */
+  margin-top: 25vh;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 3rem;
+  vertical-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 8px 16px 0 rgba(12, 11, 11, 0.2), 0 6px 20px 0 rgba(41, 58, 95, 0.664);
 }
 
-nav {
+.dashboard {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
   align-items: center;
-  min-height: 10vh;
-  background-color: rgb(73, 79, 82);
-  color: white;
+  justify-content: center;
+  padding-bottom: 10px;
+  margin: 0;
+}
+
+.greeting {
+  padding-left: 50px;
+}
+
+.search {
+  padding-right: 50px;
+}
+
+.noteSelection {
+  border: 2px solid black;
+  width: 150px;
+  height: 100px;
+  overflow: auto;
+  margin-left: 50px;
+  margin-top: 50px;
+}
+
+button.newNote {
+  position: relative;
+  left: -60px;
+}
+
+div.newNote {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 10px;
+  margin: 0;
+}
+
+.notePreview {
+  float: right;
+  width: 600px;
+  height: 400px;
 }
 .App-nav-links {
   width: 40%;

@@ -3,25 +3,30 @@ import './Components/Styles/App.css';
 import Login from './Components/login';
 import Main from './Components/main';
 import NewNote from './Components/newNote';
-import Nav from './Components/nav';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import Message from './Components/message';
+import { LoginProvider } from './Components/loginContext';
+import Welcome from './Components/welcome';
+import Login from './Components/login';
 
-function App() {
-  return (
-    <Router>
-    <div className="App">
-      <Nav />
-      <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/main" component={Main}/>
-        <Route path="/newNote" component={NewNote} />
-      </Switch>
+const axios = require('axios');
 
-      
-    </div>
-    </Router>
-    
-  );
-}
+// Make it all functional again and break it down to be simpler
 
-export default App;
+//This is going to be cut down to be really simple due to useContext
+
+export default function App() {
+    return (
+      <div className="App">
+        <LoginProvider>
+        <Router>
+          <Switch>
+              <Route exact path="/" component={Welcome} />
+              <Route path="/login" component={Login} />
+              <Route exact path="/dashboard" component={Dashboard} />
+              <NewNote exact path="/newNote" component={NewNote} />
+          </Switch>
+        </Router>
+        </LoginProvider>
+      </div>
+    );
+  }

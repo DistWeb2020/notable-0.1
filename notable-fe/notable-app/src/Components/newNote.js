@@ -1,11 +1,18 @@
 ﻿import React from 'react';
-import './Styles/newNote.css';
+import './Styles/App.css';
+import Nav from './nav';
+import { useState } from 'react';
 
-function NewNote() {
-return (
-    <div>
-        <title>New Note</title>
-        <table>
+function NewNote(props) {
+  const [user, setUser] = useState(props.location.state.user);
+  return (
+    <div className="newNote">
+      <Nav user={user}/>
+      {/* <div className="container">
+          {/* Fix the styling later */}
+      {/* </div> */}
+      <h1>New Note</h1>
+      <table>
         <tr>
             <td>
                 <input id="name" placeholder="Title" />
