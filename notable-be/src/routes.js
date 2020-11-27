@@ -62,6 +62,20 @@ router.get('/notes', function (req, res) {
     })
 })
 
+//get ONE note API
+router.get('/note/content', function (req, res) {
+    pool.getConnection(function (err, conn) {
+        if (err) { res.status(400).json("Could not connect to database, check server"); }
+        else {
+            conn.query('SELECT * FROM data LEFT JOIN note ON data.dataid = note.dataref WHERE data.dataid = ?', req.query.dataid, function (err, returnedNote, fields) {
+                if (err) { { res.status(404).json(err.message); } }
+                else { res.status(200).json(returnedNote); }
+            })
+            pool.releaseConnection(conn);
+        }
+    })
+})
+
 
 //create note API
 router.post('/create', function (req, res) {

@@ -93,10 +93,10 @@ export default function Login() {
             </button>
             <div className="header">Notable</div>
             <div className="login content">
-              Username:
+              Username  :
               <input className="username" id="username"/>
               <br /><br />
-                Password:
+                Password  :
               <input className="password" id="password" type="password" />
               <br /><br />
               {/* You need to make this button send you to the dashboard when verifyLogin is succesful */}

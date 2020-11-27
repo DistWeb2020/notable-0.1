@@ -1,9 +1,9 @@
 ﻿﻿import React from 'react';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import './Styles/App.css';
 import Nav from './nav';
 import NewNote from './newNote';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Component, useState } from 'react';
 import { useLogin, useUserInfo } from './loginContext';
 import { useEffect } from 'react';
@@ -37,12 +37,13 @@ export default function Dashboard(props) {
 	}
 
 	//function populatePreview() //make the preview in to a nice little card
-  var populatePreview = () => {
-	//Send the paramaters to /login
-	//parameter would probably be userId (check postman to be sure), but it would be taken from the prop sent from loginPage
+	var populatePreview = (key) => {
+		console.log(key);
+		//Send the paramaters to /login
+		//parameter would probably be userId (check postman to be sure), but it would be taken from the prop sent from loginPage
 
-	//Plop note text in text area
-}
+		//Plop note text in text area
+	}
 
 	//function moveToNewNote() //User wants to make a newnote
 	var moveToNewNote = () => {
@@ -50,15 +51,15 @@ export default function Dashboard(props) {
 	}
 
 	// console.log(user.notes);
-	
-	return permit? (
+
+	return permit ? (
 		<div>
 			{/* Redirect to Welcome with Login */}
 			<Redirect to={{
-				pathname:'/'
-			}}/>
+				pathname: '/'
+			}} />
 		</div>
-	):(
+	) : (
 
 			<div className="dashboard">
 				<Nav user={user} />
@@ -73,27 +74,28 @@ export default function Dashboard(props) {
 									Search:
 			<input />
 								</form>
-	
+
 								<div className="noteSelection">
 									{/* {populateNoteList} */}
 									<table id="noteList" className="noteList">
 										{/* Table is populated using a mapping from noteList */}
 										{/* May want to make the element within the td a button instead of just text. Unless an onClick is available for td. */}
-										{user.notes.map(note =>(
+										
+										{user.notes.map(note => (
 											<tr>
-												<td key={note.name}>{note.name}</td>
+												<td key={note.dataid}>{note.name}</td>
 											</tr>
 										))}
 									</table>
 								</div>
-	
+
 								<button className="newNote">New Note</button>
 							</div>
 						</td>
-	
+
 						<td>
 							<div>
-								Preview:
+								Preview
 	<br />
 								<textarea id="notePreview" className="notePreview"></textarea>
 							</div>
