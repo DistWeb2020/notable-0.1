@@ -81,6 +81,19 @@ router.get('/note/content', function (req, res) {
     })
 })
 
+//update note API
+router.post('/update', function (req, res) {
+    pool.getConnection(function (err, conn) {
+        if (err) { res.status(400).json("Could not connect to database, check server"); }
+        else {
+            conn.query('UPDATE note SET text = ? , name = ? WHERE noteid = ?', [req.body.text, req.body.name, req.body.noteid], function (err, updatedNote, fields) {
+                if (err) { { res.status(404).json(err.message); } }
+                else { res.status(200).json(updatedNote); }
+            })
+            pool.releaseConnection(conn);
+        }
+    })
+})
 
 //create note API
 router.post('/create', function (req, res) {
