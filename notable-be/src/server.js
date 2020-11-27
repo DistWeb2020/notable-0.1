@@ -1,15 +1,13 @@
 // Create express app
 const express = require("express");
 const app = express();
-const cors = require("cors");
+const mysql = require("mysql2");
 
 
 app.use(express.static('public'));
 
 //Routes - seperated routes and server
 app.use(require('./routes')); 
-
-// Allows for cross origin resources so fetch can be called from react to node server
 
 // Server port
 let HTTP_PORT = process.env.PORT || 8000;;
