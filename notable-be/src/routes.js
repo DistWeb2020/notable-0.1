@@ -27,6 +27,10 @@ router.get('/login', function (req, res) {
                 if (err) { res.status(404).json("User does not exist"); }
 
                 else {
+                    if ( typeof userObject[0] == 'undefined'){
+                        res.status(404).json("User does not exist"); 
+                    }
+                    else {
                     responseObject.userid = userObject[0].userid;
                     responseObject.firstname = userObject[0].firstname;
                     responseObject.lastname = userObject[0].lastname;
@@ -42,6 +46,7 @@ router.get('/login', function (req, res) {
                         }
                     });
                 }
+            }
             });
             pool.releaseConnection(conn);
         }
@@ -56,6 +61,20 @@ router.get('/notes', function (req, res) {
             conn.query('SELECT * FROM data LEFT JOIN note ON data.dataid = note.dataref LEFT JOIN image ON image.data = data.dataid WHERE data.user = ?', req.query.userid, function (err, userNotes, fields) {
                 if (err) { { res.status(404).json(err.message); } }
                 else { res.status(200).json(userNotes); }
+            })
+            pool.releaseConnection(conn);
+        }
+    })
+})
+
+//get ONE note API
+router.get('/note/content', function (req, res) {
+    pool.getConnection(function (err, conn) {
+        if (err) { res.status(400).json("Could not connect to database, check server"); }
+        else {
+            conn.query('SELECT * FROM data LEFT JOIN note ON data.dataid = note.dataref WHERE data.dataid = ?', req.query.dataid, function (err, returnedNote, fields) {
+                if (err) { { res.status(404).json(err.message); } }
+                else { res.status(200).json(returnedNote); }
             })
             pool.releaseConnection(conn);
         }
