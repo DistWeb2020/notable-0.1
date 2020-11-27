@@ -3,7 +3,7 @@ import { Redirect, useHistory } from 'react-router-dom';
 import './Styles/App.css';
 import Nav from './nav';
 import NewNote from './newNote';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {Prompt} from 'react-router-dom';
 import { Component, useState } from 'react';
 import { useLogin, useUserInfo } from './loginContext';
 import { useEffect } from 'react';
@@ -16,12 +16,15 @@ import { useEffect } from 'react';
 
 export default function Dashboard(props) {
 	// const user = props.history.location.state;
+	var userInfo = useUserInfo();
 	const [user, setUser] = useState(props.location.state.user); //Use this or the state that is passed form the redirect?
 	const permit = useLogin(); //Should use only if the user for some reason can still get to this route if they just typed it in, which is likely
 	// const history = useHistory(); //
-
+  console.log("In Dashboard");
+	console.log(permit);
+	console.log(props);
 	// useEffect(() => {
-	// 	const [user, setUser] = useState(props.location.state.user);
+	// 	setUser(props.location.state.user);
 	// },[permit])
 
 	console.log("I made it to the dashboard.");
@@ -51,7 +54,8 @@ export default function Dashboard(props) {
 
 	// console.log(user.notes);
 	
-	return permit? (
+
+	return permit===false? (
 		<div>
 			{/* Redirect to Welcome with Login */}
 			<Redirect to={{
@@ -59,7 +63,13 @@ export default function Dashboard(props) {
 			}}/>
 		</div>
 	):(
-
+			<>
+			<Prompt
+  message={(location) => {
+		return location.pathname.startsWith("/login")
+		? "Are you sure you want to leave?\nYou will be signed out.":true
+	}}
+/>
 			<div className="dashboard">
 				<Nav user={user} />
 				<title>Dashboard</title>
@@ -80,7 +90,7 @@ export default function Dashboard(props) {
 										{/* Table is populated using a mapping from noteList */}
 										{/* May want to make the element within the td a button instead of just text. Unless an onClick is available for td. */}
 										{user.notes.map(note =>(
-											<tr>
+											<tr key={note.name}>
 												<td key={note.name}>{note.name}</td>
 											</tr>
 										))}
@@ -101,5 +111,6 @@ export default function Dashboard(props) {
 					</tr>
 				</table>
 			</div>
+			</>
 		);
 }
