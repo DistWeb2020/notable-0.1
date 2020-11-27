@@ -3,9 +3,8 @@ import { Redirect } from 'react-router-dom';
 import './Styles/App.css';
 import Nav from './nav';
 import NewNote from './newNote';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Component, useState } from 'react';
-import { useLogin, useUserInfo } from './loginContext';
+import { useState } from 'react';
+import { useLogin} from './loginContext';
 import { useEffect } from 'react';
 const axios = require('axios');
 
@@ -28,17 +27,18 @@ export default function Dashboard(props) {
 		// },[permit])
 
 		//retrieve the note and set the text preview 
-		if (note != 0){
-		axios.get('http://localhost:8000/note/content', {
-			params: {
-				dataid: note
-			}
-		})
-			.then((response) => {
-				console.log(response.data[0].text);
-				document.getElementById("notePreview").textContent = response.data[0].text;
-
-			}) }
+		if (note != 0) {
+			axios.get('http://localhost:8000/note/content', {
+				params: {
+					dataid: note
+				}
+			})
+				.then((response) => {
+					console.log(response.data[0].text);
+					document.getElementById("notePreview").textContent = response.data[0].text;
+					document.getElementById("noteName").textContent = response.data[0].name;
+				})
+		}
 	});
 
 
@@ -83,13 +83,12 @@ export default function Dashboard(props) {
 				<title>Dashboard</title>
 				<h1 className="greeting">Hello {user.firstname} {user.lastname}!</h1>
 				{/* <h1>Status: {this.props.loggedInStatus}</h1> */}
-				<table>
+				<table cellPadding="30px">
 					<tr>
 						<td>
 							<div>
 								<form className="search">
-									Search:
-			<input />
+									SEARCH <input/>
 								</form>
 
 								<div className="noteSelection">
@@ -107,16 +106,15 @@ export default function Dashboard(props) {
 										</tbody>
 									</table>
 								</div>
-
-								<button className="newNote">New Note</button>
 							</div>
 						</td>
 
 						<td>
-							<div>
-								Preview
-	<br />
+							<div cellPadding="20px">
+								Preview of - 
+								<label id="noteName"> </label> <button>Edit Note</button> < br />< br />
 								<textarea id="notePreview" readOnly={true} className="notePreview"></textarea>
+
 							</div>
 						</td>
 					</tr>

@@ -1,6 +1,6 @@
 import React from 'react'
-import {Redirect, useHistory} from 'react-router-dom';
-import {useLogin, useUpdateLogin, useUserInfo, useUpdateUserInfo} from './loginContext';
+import {useHistory} from 'react-router-dom';
+import {useLogin, useUserInfo} from './loginContext';
 
 import NavNLI from './nav-notLoggedIn';
 import Login from './login';

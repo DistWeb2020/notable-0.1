@@ -15,7 +15,7 @@ function NewNote(props) {
       <table>
         <tr>
           <td>
-            <input id="name" placeholder="Title" />
+            <input id="name" style={{ textAlign: "center" }} placeholder="Title" />
             <br /><br />
             <textarea className="noteText" placeholder="Write something... notable"></textarea>
           </td>
