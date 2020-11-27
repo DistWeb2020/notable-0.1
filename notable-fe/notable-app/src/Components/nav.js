@@ -3,7 +3,7 @@ import './Styles/App.css';
 import {Link} from 'react-router-dom';
 function Nav(props) {
   return (
-      <nav>
+      <nav className="my-nav">
       <ul className="App-nav-links">
         {/* Just using the welcome page as the login page */}
           {/* <Link className="my-nav" to="/" >
