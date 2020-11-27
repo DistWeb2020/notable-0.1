@@ -9,12 +9,9 @@ import Login from './login';
 export default function Welcome(props) {
   const permit = useLogin();
   const userInfo = useUserInfo();
-  // const togglePermit = useUpdateLogin();
+  const togglePermit = useUpdateLogin();
   
   const history = useHistory(); //Could this be made in ThemeContext?
-  
-  // useEffect(() => {
-  // }, [permit]);
 
   //Actually probably don't need this
   // const sendToLogin = () => {

@@ -5,7 +5,7 @@ import Nav from './nav';
 import NewNote from './newNote';
 import {Prompt} from 'react-router-dom';
 import { Component, useState } from 'react';
-import { useLogin, useUserInfo } from './loginContext';
+import { useLogin, useUserInfo, useUpdateLogin } from './loginContext';
 import { useEffect } from 'react';
 
 // function componentDidMount() {
@@ -20,12 +20,14 @@ export default function Dashboard(props) {
 	const [user, setUser] = useState(props.location.state.user); //Use this or the state that is passed form the redirect?
 	const permit = useLogin(); //Should use only if the user for some reason can still get to this route if they just typed it in, which is likely
 	// const history = useHistory(); //
+	const togglePermit = useUpdateLogin();
+	var location = {};
   console.log("In Dashboard");
 	console.log(permit);
 	console.log(props);
 	// useEffect(() => {
-	// 	setUser(props.location.state.user);
-	// },[permit])
+		
+	// })
 
 	console.log("I made it to the dashboard.");
 	console.log(user);
@@ -54,6 +56,11 @@ export default function Dashboard(props) {
 
 	// console.log(user.notes);
 	
+	window.onbeforeunload = function () {
+		togglePermit();
+		console.log(permit);
+  }
+
 
 	return permit===false? (
 		<div>
@@ -66,8 +73,10 @@ export default function Dashboard(props) {
 			<>
 			<Prompt
   message={(location) => {
+		
 		return location.pathname.startsWith("/login")
-		? "Are you sure you want to leave?\nYou will be signed out.":true
+		? "Are you sure you want to leave?\nYou will be signed out."
+		:true
 	}}
 />
 			<div className="dashboard">

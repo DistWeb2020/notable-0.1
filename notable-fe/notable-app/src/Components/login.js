@@ -1,4 +1,4 @@
-﻿import React from 'react';
+﻿import React, {useEffect} from 'react';
 import Dashboard from './dashboard';
 import Popup from 'reactjs-popup';
 import './Styles/App.css';
@@ -8,7 +8,7 @@ const axios = require('axios');
 
 
 
-export default function Login() {
+export default function Login(props) {
   //Permit and togglePermit are used for access control
   var permit = useLogin();
   const togglePermit = useUpdateLogin();
@@ -17,8 +17,15 @@ export default function Login() {
 
   const history = useHistory(); //Could this be made in ThemeContext?
 
+  //Keeps the user logged out if they came back from a different page
+  useEffect(() => {
+      togglePermit()
+  }, [userInfo])
+
+
   const login = () => {
     console.log("I'm in login!");
+    
     // obtain users username and password
     var user = document.getElementById("username").value;
     var password = document.getElementById("password").value;
@@ -43,6 +50,7 @@ export default function Login() {
           console.log(response.data);
           console.log(userInfo);
           //Use togglePermit to change it to true
+          console.log(permit);
           if(permit===false)
           togglePermit();
           console.log("In Login");
@@ -79,6 +87,7 @@ export default function Login() {
       Make your notes more notable!
       <br/><br/>Login below!<br/><br/>
       </h3>
+      
     <Popup
         trigger={<button id="login-button" className="home-button"> Login </button>}
         modal
