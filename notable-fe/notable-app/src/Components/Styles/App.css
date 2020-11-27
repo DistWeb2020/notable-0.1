@@ -152,6 +152,8 @@ div.newNote {
   float: right;
   width: 600px;
   height: 400px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 25px;
 }
 
 .noteText {

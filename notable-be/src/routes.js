@@ -27,6 +27,10 @@ router.get('/login', function (req, res) {
                 if (err) { res.status(404).json("User does not exist"); }
 
                 else {
+                    if ( typeof userObject[0] == 'undefined'){
+                        res.status(404).json("User does not exist"); 
+                    }
+                    else {
                     responseObject.userid = userObject[0].userid;
                     responseObject.firstname = userObject[0].firstname;
                     responseObject.lastname = userObject[0].lastname;
@@ -42,6 +46,7 @@ router.get('/login', function (req, res) {
                         }
                     });
                 }
+            }
             });
             pool.releaseConnection(conn);
         }

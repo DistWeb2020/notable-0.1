@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Component, useState } from 'react';
 import { useLogin, useUserInfo } from './loginContext';
 import { useEffect } from 'react';
+const axios = require('axios');
 
 // function componentDidMount() {
 // 	//look at data from login and put it in a nice little JSON
@@ -15,18 +16,34 @@ import { useEffect } from 'react';
 // }
 
 export default function Dashboard(props) {
-	// const user = props.history.location.state;
+
 	const [user, setUser] = useState(props.location.state.user); //Use this or the state that is passed form the redirect?
+	const [note, setNote] = useState(0);
 	const permit = useLogin(); //Should use only if the user for some reason can still get to this route if they just typed it in, which is likely
 	// const history = useHistory(); //
 
-	// useEffect(() => {
-	// 	const [user, setUser] = useState(props.location.state.user);
-	// },[permit])
 
-	console.log("I made it to the dashboard.");
-	console.log(user);
-	console.log(props.location.state.user);
+	useEffect(() => {
+		// 	const [user, setUser] = useState(props.location.state.user);
+		// },[permit])
+
+		//retrieve the note and set the text preview 
+		if (note != 0){
+		axios.get('http://localhost:8000/note/content', {
+			params: {
+				dataid: note
+			}
+		})
+			.then((response) => {
+				console.log(response.data[0].text);
+				document.getElementById("notePreview").textContent = response.data[0].text;
+
+			}) }
+	});
+
+
+	// console.log("I made it to the dashboard.");
+	// console.log(user);
 
 	//function search() //Allows user to search the notes
 	var search = () => {
@@ -80,12 +97,14 @@ export default function Dashboard(props) {
 									<table id="noteList" className="noteList">
 										{/* Table is populated using a mapping from noteList */}
 										{/* May want to make the element within the td a button instead of just text. Unless an onClick is available for td. */}
-										
-										{user.notes.map(note => (
-											<tr>
-												<td key={note.dataid}>{note.name}</td>
-											</tr>
-										))}
+										<thead></thead>
+										<tbody>
+											{user.notes.map(note => (
+												<tr>
+													<td onClick={() => setNote(note.dataid)}>{note.name}</td>
+												</tr>
+											))}
+										</tbody>
 									</table>
 								</div>
 
@@ -97,7 +116,7 @@ export default function Dashboard(props) {
 							<div>
 								Preview
 	<br />
-								<textarea id="notePreview" className="notePreview"></textarea>
+								<textarea id="notePreview" readOnly={true} className="notePreview"></textarea>
 							</div>
 						</td>
 					</tr>
