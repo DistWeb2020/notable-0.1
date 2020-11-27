@@ -58,7 +58,7 @@ router.get('/notes', function (req, res) {
     pool.getConnection(function (err, conn) {
         if (err) { res.status(400).json("Could not connect to database, check server"); }
         else {
-            conn.query('SELECT * FROM data LEFT JOIN note ON data.dataid = note.dataref LEFT JOIN image ON image.data = data.dataid WHERE data.user = ?', req.query.userid, function (err, userNotes, fields) {
+            conn.query('SELECT dataid, user, date, note.name AS noteName, data.name AS dataName, noteid, text, img, imageid, data,src FROM data LEFT JOIN note ON data.dataid = note.dataref LEFT JOIN image ON image.data = data.dataid WHERE data.user = ?', req.query.userid, function (err, userNotes, fields) {
                 if (err) { { res.status(404).json(err.message); } }
                 else { res.status(200).json(userNotes); }
             })
