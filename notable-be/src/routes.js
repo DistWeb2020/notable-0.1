@@ -132,7 +132,7 @@ router.post('/update', function (req, res) {
     pool.getConnection(function (err, conn) {
         if (err) { res.status(400).json("Could not connect to database, check server"); }
         else {
-            conn.query('UPDATE note SET text = ?, name = ? WHERE noteid = ?', [req.body.text, req.body. name, req.body.noteid], function (err, update, fields) {
+            conn.query('UPDATE note SET text = ?, name = ? WHERE noteid = ?', [req.body.text, req.body.name, req.body.noteid], function (err, update, fields) {
                 if (err) { res.status(404).json(err.message);  }
                 else { 
                     conn.query('SELECT * FROM note WHERE noteid = ?', req.body.noteid, function (err2, updatedNote){
