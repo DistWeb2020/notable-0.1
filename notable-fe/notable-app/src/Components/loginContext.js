@@ -29,12 +29,11 @@ export function LoginProvider({children}) {
 
   function togglePermit() {
     setPermit(prevPermit => !prevPermit);
-    return permit;
   }
 
-  // function updateUserInfo(user) {
-  //   setUserInfo(user);
-  // }
+  function updateUserInfo(user) {
+    setUserInfo(user);
+  }
 
   return (
     // There is now a context provider for the theme and the button. You need both

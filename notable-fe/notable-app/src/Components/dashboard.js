@@ -3,8 +3,9 @@ import { Redirect, useHistory} from 'react-router-dom';
 import './Styles/App.css';
 import Nav from './nav';
 import NewNote from './newNote';
-import { useState } from 'react';
-import { useLogin} from './loginContext';
+import {Prompt} from 'react-router-dom';
+import { Component, useState } from 'react';
+import { useLogin, useUserInfo, useUpdateLogin } from './loginContext';
 import { useEffect } from 'react';
 const axios = require('axios');
 
@@ -16,6 +17,8 @@ const axios = require('axios');
 
 export default function Dashboard(props) {
 
+	// const user = props.history.location.state;
+	var userInfo = useUserInfo();
 	const [user, setUser] = useState(props.location.state.user); //Use this or the state that is passed form the redirect?
 	const [note, setNote] = useState(0);
 
@@ -46,6 +49,15 @@ export default function Dashboard(props) {
 		}
 	});
 
+	// const history = useHistory(); //
+	const togglePermit = useUpdateLogin();
+	var location = {};
+  console.log("In Dashboard");
+	console.log(permit);
+	console.log(props);
+	// useEffect(() => {
+		
+	// })
 
 	// console.log("I made it to the dashboard.");
 	// console.log(user);
@@ -73,16 +85,30 @@ export default function Dashboard(props) {
 	}
 
 	// console.log(user.notes);
+	
+	window.onbeforeunload = function () {
+		togglePermit();
+		console.log(permit);
+  }
 
-	return permit ? (
+
+	return permit===false? (
 		<div>
 			{/* Redirect to Welcome with Login */}
 			<Redirect to={{
 				pathname: '/'
 			}} />
 		</div>
-	) : (
-
+	):(
+			<>
+			<Prompt
+  message={(location) => {
+		
+		return location.pathname.startsWith("/login")
+		? "Are you sure you want to leave?\nYou will be signed out."
+		:true
+	}}
+/>
 			<div className="dashboard">
 				<Nav user={user} />
 				<title>Dashboard</title>
@@ -129,5 +155,6 @@ export default function Dashboard(props) {
 					</tr>
 				</table>
 			</div>
+			</>
 		);
 }
