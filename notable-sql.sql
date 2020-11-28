@@ -18,8 +18,8 @@ USE `notable` ;
 -- Table `notable`.`user`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `notable`.`user` (
-  `userid` INT NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(45) NOT NULL,
+  `userid` INT DEFAULT ' ' NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(45) DEFAULT ' 'NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   `firstname` VARCHAR(45) NULL,
   `lastname` VARCHAR(45) NULL,

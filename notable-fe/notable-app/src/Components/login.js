@@ -83,7 +83,7 @@ export default function Login() {
   ):(
     // Show login button
     <Popup
-        trigger={<button id="login-button" className="home-button"> Login </button>}
+        trigger={<button id="login-button" className="home-button" > Login </button>}
         modal
         nested
       >
@@ -110,7 +110,7 @@ export default function Login() {
                   close();
                 }}
               >
-                close modal
+                close
               </button>
           </div>
       </Popup>
