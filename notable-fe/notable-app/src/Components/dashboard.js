@@ -114,14 +114,11 @@ export default function Dashboard(props) {
 				<title>Dashboard</title>
 				<h1 className="greeting">Hello {user.firstname} {user.lastname}!</h1>
 				{/* <h1>Status: {this.props.loggedInStatus}</h1> */}
-				<table cellPadding="30px">
+				<table cellPadding="0px">
 					<tr>
 						<td>
 							<div>
-								<form className="search">
-									SEARCH <input/>
-								</form>
-
+									Select a Note:
 								<div className="noteSelection">
 									{/* {populateNoteList} */}
 									<table id="noteList" className="noteList">
@@ -142,12 +139,14 @@ export default function Dashboard(props) {
 
 						<td>
 							<div cellPadding="20px">
-								Preview of - 
-								<label id="noteName"> </label> <button onClick={() => {
+								Preview of -
+								<label id="noteName"> </label>
+								<br></br><br></br>
+								 <button className="editButton" onClick={() => {
 									let path = "/newNote";
 									history.push({pathname:path, state:{noteID: noteID, user: user}})
 								
-								}}>Edit Note</button> < br />< br />
+								}}> Edit Note </button> < br />< br />
 								<textarea id="notePreview" readOnly={true} className="notePreview"></textarea>
 
 							</div>

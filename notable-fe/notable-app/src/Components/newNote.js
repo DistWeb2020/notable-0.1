@@ -139,16 +139,17 @@ function NewNote(props) {
           {/* Fix the styling later */}
       {/* </div> */}
       <h1>New Note</h1>
+      <br></br><br></br>
       <table>
         <tr>
           <td>
-            <input id="name" placeholder="Title" />
+            <input id="name" className="titleName" placeholder="Title" />
             <br /><br />
             <textarea id="noteText" className="noteText" placeholder="Write something... notable"></textarea>
           </td>
 
           <td id="lside">
-            Fonts:
+            Fonts:&nbsp; &nbsp;
             <select id="fontSelect" onChange={changeTextVisual}>
               <option value="Times">Times</option>
               <option value="Georgia">Georgia</option>
@@ -157,7 +158,7 @@ function NewNote(props) {
             </select>
             <br /><br />
 
-            Size:
+            Size:&nbsp;&nbsp;
             <select id="sizeSelect" onChange={changeTextVisual}>
               <option value="11">11</option>
               <option value="12">12</option>
@@ -169,9 +170,9 @@ function NewNote(props) {
             <label for="bold">Bold</label>
             <br /><br />
             <input type="checkbox" id="italics" onChange={changeTextVisual} />
-            <label for="bold">Italics</label>
+            <label for="italics">Italics</label>
             <br /><br />
-            <button onClick={save}>Save</button>
+            <button className='save' onClick={save}>Save</button>
           </td>
 
         </tr>
