@@ -1,27 +1,32 @@
-import React from 'react';
+import React, {useContext, createContext, useState} from 'react';
+import {Redirect, Link, Switch, Route, useHistory, useLocation, BrowserRouter as Router} from 'react-router-dom';
 import './Components/Styles/App.css';
-import Login from './Components/login';
-import Main from './Components/main';
+import Dashboard from './Components/dashboard';
 import NewNote from './Components/newNote';
-import Nav from './Components/nav';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import Message from './Components/message';
+import { LoginProvider } from './Components/loginContext';
+import Welcome from './Components/welcome';
+import Login from './Components/login';
 
+const axios = require('axios');
 
-function App() {
-  return (
-    <Router>
-    <div className="App">
-      <Nav />
-      <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/main" component={Main}/>
-        <Route path="/newNote" component={NewNote} />
-      </Switch>
-    </div>
-    </Router>
-    
-  );
-}
+// Make it all functional again and break it down to be simpler
 
+//This is going to be cut down to be really simple due to useContext
 
-export default App;
+export default function App() {
+    return (
+      <div className="App">
+        <LoginProvider>
+        <Router>
+          <Switch>
+              <Route exact path="/" component={Welcome} />
+              <Route path="/login" component={Login} />
+              <Route exact path="/dashboard" component={Dashboard} />
+              <NewNote exact path="/newNote" component={NewNote} />
+          </Switch>
+        </Router>
+        </LoginProvider>
+      </div>
+    );
+  }

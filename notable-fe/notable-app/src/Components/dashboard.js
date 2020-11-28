@@ -1,5 +1,5 @@
 ﻿﻿import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory} from 'react-router-dom';
 import './Styles/App.css';
 import Nav from './nav';
 import NewNote from './newNote';
@@ -8,9 +8,7 @@ import { useLogin} from './loginContext';
 import { useEffect } from 'react';
 const axios = require('axios');
 
-const notes = [];
-
-// funtion componentDidMount() {
+// function componentDidMount() {
 // 	//look at data from login and put it in a nice little JSON
 // 	// console.log("userData", this.props.location.state.userData);
 // 	//grab data from notes API and put in JSON
@@ -20,9 +18,11 @@ export default function Dashboard(props) {
 
 	const [user, setUser] = useState(props.location.state.user); //Use this or the state that is passed form the redirect?
 	const [note, setNote] = useState(0);
-	const permit = useLogin(); //Should use only if the user for some reason can still get to this route if they just typed it in, which is likely
-	// const history = useHistory(); //
 
+	const permit = useLogin(); //Should use only if the user for some reason can still get to this route if they just typed it in, which is likely
+	const history = useHistory(); 
+
+	var noteID;
 
 	useEffect(() => {
 		// 	const [user, setUser] = useState(props.location.state.user);
@@ -39,6 +39,9 @@ export default function Dashboard(props) {
 					console.log(response.data[0].text);
 					document.getElementById("notePreview").textContent = response.data[0].text;
 					document.getElementById("noteName").textContent = response.data[0].name;
+
+					noteID = response.data[0].noteid;
+					console.log(noteID);
 				})
 		}
 	});
@@ -47,6 +50,13 @@ export default function Dashboard(props) {
 	// console.log("I made it to the dashboard.");
 	// console.log(user);
 
+	//function search() //Allows user to search the notes
+	var search = () => {
+		//First Idea:
+		//Do a Query in database
+		//With the response update the notes and noteList states with searchResults
+		//Hopefully page updates because of change in state
+	}
 
 	//function populatePreview() //make the preview in to a nice little card
 	var populatePreview = (key) => {
@@ -57,13 +67,10 @@ export default function Dashboard(props) {
 		//Plop note text in text area
 	}
 
-	//function search() //Allows user to search the notes
-	
-	//function populateScrollArea() //show list of notes use the notes API
-	
-	//function populatePreview() //make the preview in to a nice little card
-	
 	//function moveToNewNote() //User wants to make a newnote
+	var moveToNewNote = () => {
+		//Redirect
+	}
 
 	// console.log(user.notes);
 
@@ -76,10 +83,10 @@ export default function Dashboard(props) {
 		</div>
 	) : (
 
-			<div>
-				<Nav />
+			<div className="dashboard">
+				<Nav user={user} />
 				<title>Dashboard</title>
-				<h1 className="greeting">Hello User51654321321654654</h1>
+				<h1 className="greeting">Hello {user.firstname} {user.lastname}!</h1>
 				{/* <h1>Status: {this.props.loggedInStatus}</h1> */}
 				<table cellPadding="30px">
 					<tr>
@@ -110,7 +117,11 @@ export default function Dashboard(props) {
 						<td>
 							<div cellPadding="20px">
 								Preview of - 
-								<label id="noteName"> </label> <button>Edit Note</button> < br />< br />
+								<label id="noteName"> </label> <button onClick={() => {
+									let path = "/newNote";
+									history.push({pathname:path, state:{noteID: noteID, user: user}})
+								
+								}}>Edit Note</button> < br />< br />
 								<textarea id="notePreview" readOnly={true} className="notePreview"></textarea>
 
 							</div>
@@ -119,5 +130,4 @@ export default function Dashboard(props) {
 				</table>
 			</div>
 		);
-	
 }

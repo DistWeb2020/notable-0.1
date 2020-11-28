@@ -6,48 +6,69 @@ import { useState } from 'react';
 const axios = require('axios');
 
 function NewNote(props) {
+  //Retrieve logged in user and the noteID of the note to edit
   const [user, setUser] = useState(props.location.state.user);
-
-  //Waiting on merge to determine how we're keeping track of current logged in user
+  const [noteID, setNoteID] = useState(props.location.state.noteID);
+  
+  //Local variables to hold previous information
   var localUser = user;
+  var localNoteID;
+
+  //A noteID must be greater than 0
+  if (noteID > 0) {
+    //Assign value to local variable
+    localNoteID = noteID;
+  } else {
+    //Set val to -1 to indicate new note
+    localNoteID = -1;
+  }
+
+  //Store information about note
   var name;
   var text;
   var date;
-  //noteId needs to be passed in if updating a note. Make noteId -1 if new note
-  var noteId = 213;
 
+  //Local variable to store get response
   var notes;
 
-  if (noteId != -1) {
+  //Only enter if we are editing a note
+  if (localNoteID != -1) {
+
+    //Index for correct note
     var index;
 
+    //Get request for data
     axios.get('http://localhost:8000/notes', {
       params: {
         userid: 1
       }
     })
       .then((response) => {
-        console.log(response);
+
+        //Assign response to local variable
         notes = response.data;
 
+        //Loop through a users notes and find one with matching noteID
         for (var i = 0; i < notes.length; i++) {
-          if (notes[i].noteid == noteId) {
+          if (notes[i].noteid == localNoteID) {
             index = i;
           }
         }
 
-        document.getElementById("name").value = notes[index].name;
+        //Populate UI with name and text of note
+        document.getElementById("name").value = notes[index].noteName;
         document.getElementById("noteText").value = notes[index].text;
 
       }, (error) => {
-        // Use message.js to display some error message to the user telling them to try again or signup
         console.log(error);
       });
   }
 
+  //Save button
   let save = () => {
     name = document.getElementById("name").value;
     text = document.getElementById("noteText").value;
+
     //Get current date
     date = new Date();
     var dd = String(date.getDate()).padStart(2, '0');
@@ -55,11 +76,16 @@ function NewNote(props) {
     var yyyy = date.getFullYear();
     date = mm + '/' + dd + '/' + yyyy;
 
+    //Note must have a name
     if (name.length == 0) {
       alert("Please give your note a name")
-    } else if (noteId == -1) {
+
+    //check if we are creating new note or editing
+    } else if (localNoteID == -1) {
+
+      //create new note
       axios.post('http://localhost:8000/create', {
-        user: localUser,
+        user: localUser.userid,
         name: name,
         text: text,
         date: date,
@@ -67,11 +93,14 @@ function NewNote(props) {
       })
         .then((response) => {
           console.log(response);
-        })
+        })    
     } else {
+
+      //send update to note
       axios.post('http://localhost:8000/update', {
-        noteid: noteId,
-        text: text
+        noteid: localNoteID,
+        text: text,
+        name: name
       })
         .then((response) => {
           console.log(response);
@@ -79,12 +108,17 @@ function NewNote(props) {
     }
   }
 
+  //Function to edit note visuals
   let changeTextVisual = () => {
+
+    //Retrieve font and font size
     var fontVal = "font-family:" + document.getElementById("fontSelect").value + "; ";
     var sizeVal = "font-size:" + document.getElementById("sizeSelect").value + "px;";
 
+    //Combine into one variable
     var allChanges = fontVal + sizeVal;
 
+    //Check if bold or italics selected
     if (document.getElementById("bold").checked == true) {
       allChanges += " font-weight:bold;";
     }
@@ -93,6 +127,7 @@ function NewNote(props) {
       allChanges += " font-style:italic;";
     }
 
+    //Apply changes
     document.getElementById("noteText").style = allChanges;
   }
 
@@ -109,12 +144,12 @@ function NewNote(props) {
           <td>
             <input id="name" placeholder="Title" />
             <br /><br />
-            <textarea className="noteText" placeholder="Write something... notable"></textarea>
+            <textarea id="noteText" className="noteText" placeholder="Write something... notable"></textarea>
           </td>
 
           <td id="lside">
             Fonts:
-            <select>
+            <select id="fontSelect" onChange={changeTextVisual}>
               <option value="Times">Times</option>
               <option value="Georgia">Georgia</option>
               <option value="Arial">Arial</option>
