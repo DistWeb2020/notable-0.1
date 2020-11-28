@@ -58,7 +58,7 @@ router.get('/notes', function (req, res) {
     pool.getConnection(function (err, conn) {
         if (err) { res.status(400).json("Could not connect to database, check server"); }
         else {
-            conn.query('SELECT * FROM data LEFT JOIN note ON data.dataid = note.dataref LEFT JOIN image ON image.data = data.dataid WHERE data.user = ?', req.query.userid, function (err, userNotes, fields) {
+            conn.query('SELECT dataid, user, date, note.name AS noteName, data.name AS dataName, noteid, text, img, imageid, data,src FROM data LEFT JOIN note ON data.dataid = note.dataref LEFT JOIN image ON image.data = data.dataid WHERE data.user = ?', req.query.userid, function (err, userNotes, fields) {
                 if (err) { { res.status(404).json(err.message); } }
                 else { res.status(200).json(userNotes); }
             })
@@ -81,6 +81,19 @@ router.get('/note/content', function (req, res) {
     })
 })
 
+// //update note API
+// router.post('/update', function (req, res) {
+//     pool.getConnection(function (err, conn) {
+//         if (err) { res.status(400).json("Could not connect to database, check server"); }
+//         else {
+//             conn.query('UPDATE note SET text = ? , name = ? WHERE noteid = ?', [req.body.text, req.body.name, req.body.noteid], function (err, updatedNote, fields) {
+//                 if (err) { { res.status(404).json(err.message); } }
+//                 else { res.status(200).json(updatedNote); }
+//             })
+//             pool.releaseConnection(conn);
+//         }
+//     })
+// })
 
 //create note API
 router.post('/create', function (req, res) {
@@ -97,7 +110,7 @@ router.post('/create', function (req, res) {
                                 if (err3) { res.status(404).json(err3.message); }
                                 else {
                                     if(insertedNote.length == 0){
-                                      res.status(200).json("This item already exists");
+                                        res.status(200).json("This item already exists");
                                     }
                                     else{
                                     res.status(200).json(insertedNote);
@@ -119,7 +132,7 @@ router.post('/update', function (req, res) {
     pool.getConnection(function (err, conn) {
         if (err) { res.status(400).json("Could not connect to database, check server"); }
         else {
-            conn.query('UPDATE note SET text = ? WHERE noteid = ?', [req.body.text, req.body.noteid], function (err, update, fields) {
+            conn.query('UPDATE note SET text = ?, name = ? WHERE noteid = ?', [req.body.text, req.body. name, req.body.noteid], function (err, update, fields) {
                 if (err) { res.status(404).json(err.message);  }
                 else { 
                     conn.query('SELECT * FROM note WHERE noteid = ?', req.body.noteid, function (err2, updatedNote){
