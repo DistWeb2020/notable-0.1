@@ -139,8 +139,8 @@ export default function Dashboard(props) {
 
 						<td>
 							<div cellPadding="20px">
-								Preview of -
-								<label id="noteName"> </label>
+								Preview of &nbsp;
+								<label id="noteName" style={{fontWeight: "bold"}}> </label>
 								<br></br><br></br>
 								 <button className="editButton" onClick={() => {
 									let path = "/newNote";

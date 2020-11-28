@@ -116,7 +116,7 @@ function NewNote(props) {
     var sizeVal = "font-size:" + document.getElementById("sizeSelect").value + "px;";
 
     //Combine into one variable
-    var allChanges = fontVal + sizeVal;
+      var allChanges = fontVal + sizeVal; 
 
     //Check if bold or italics selected
     if (document.getElementById("bold").checked == true) {
@@ -139,7 +139,7 @@ function NewNote(props) {
           {/* Fix the styling later */}
       {/* </div> */}
       <h1>New Note</h1>
-      <br></br><br></br>
+      <br></br>
       <table>
         <tr>
           <td>
@@ -160,10 +160,10 @@ function NewNote(props) {
 
             Size:&nbsp;&nbsp;
             <select id="sizeSelect" onChange={changeTextVisual}>
-              <option value="11">11</option>
-              <option value="12">12</option>
-              <option value="15">15</option>
               <option value="20">20</option>
+              <option value="34">34</option>
+              <option value="50">50</option>
+              <option value="60">60</option>
             </select>
             <br /><br />
             <input type="checkbox" id="bold" onChange={changeTextVisual} />
