@@ -17,7 +17,7 @@ function Nav(props) {
           </Link>
           <Link className="my-nav" to={{
             pathname: "/newNote",
-            state: {user: props.user}
+            state: {user: props.user, noteID: props.noteID}
           }}>
             <li>New Note</li>
           </Link>

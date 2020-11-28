@@ -1,10 +1,11 @@
 ﻿﻿import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory} from 'react-router-dom';
 import './Styles/App.css';
 import Nav from './nav';
 import NewNote from './newNote';
-import { useState } from 'react';
-import { useLogin} from './loginContext';
+import {Prompt} from 'react-router-dom';
+import { Component, useState } from 'react';
+import { useLogin, useUserInfo, useUpdateLogin } from './loginContext';
 import { useEffect } from 'react';
 const axios = require('axios');
 
@@ -16,11 +17,15 @@ const axios = require('axios');
 
 export default function Dashboard(props) {
 
+	// const user = props.history.location.state;
+	var userInfo = useUserInfo();
 	const [user, setUser] = useState(props.location.state.user); //Use this or the state that is passed form the redirect?
 	const [note, setNote] = useState(0);
-	const permit = useLogin(); //Should use only if the user for some reason can still get to this route if they just typed it in, which is likely
-	// const history = useHistory(); //
 
+	const permit = useLogin(); //Should use only if the user for some reason can still get to this route if they just typed it in, which is likely
+	const history = useHistory(); 
+
+	var noteID;
 
 	useEffect(() => {
 		// 	const [user, setUser] = useState(props.location.state.user);
@@ -37,10 +42,22 @@ export default function Dashboard(props) {
 					console.log(response.data[0].text);
 					document.getElementById("notePreview").textContent = response.data[0].text;
 					document.getElementById("noteName").textContent = response.data[0].name;
+
+					noteID = response.data[0].noteid;
+					console.log(noteID);
 				})
 		}
 	});
 
+	// const history = useHistory(); //
+	const togglePermit = useUpdateLogin();
+	var location = {};
+  console.log("In Dashboard");
+	console.log(permit);
+	console.log(props);
+	// useEffect(() => {
+		
+	// })
 
 	// console.log("I made it to the dashboard.");
 	// console.log(user);
@@ -68,16 +85,30 @@ export default function Dashboard(props) {
 	}
 
 	// console.log(user.notes);
+	
+	window.onbeforeunload = function () {
+		togglePermit();
+		console.log(permit);
+  }
 
-	return permit ? (
+
+	return permit===false? (
 		<div>
 			{/* Redirect to Welcome with Login */}
 			<Redirect to={{
 				pathname: '/'
 			}} />
 		</div>
-	) : (
-
+	):(
+			<>
+			<Prompt
+  message={(location) => {
+		
+		return location.pathname.startsWith("/login")
+		? "Are you sure you want to leave?\nYou will be signed out."
+		:true
+	}}
+/>
 			<div className="dashboard">
 				<Nav user={user} />
 				<title>Dashboard</title>
@@ -112,7 +143,11 @@ export default function Dashboard(props) {
 						<td>
 							<div cellPadding="20px">
 								Preview of - 
-								<label id="noteName"> </label> <button>Edit Note</button> < br />< br />
+								<label id="noteName"> </label> <button onClick={() => {
+									let path = "/newNote";
+									history.push({pathname:path, state:{noteID: noteID, user: user}})
+								
+								}}>Edit Note</button> < br />< br />
 								<textarea id="notePreview" readOnly={true} className="notePreview"></textarea>
 
 							</div>
@@ -120,5 +155,6 @@ export default function Dashboard(props) {
 					</tr>
 				</table>
 			</div>
+			</>
 		);
 }

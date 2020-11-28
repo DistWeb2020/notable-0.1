@@ -14,7 +14,7 @@ const axios = require('axios');
 
 //This is going to be cut down to be really simple due to useContext
 
-export default function App() {
+export default function App(props) {
     return (
       <div className="App">
         <LoginProvider>
@@ -22,7 +22,7 @@ export default function App() {
           <Switch>
               <Route exact path="/" component={Welcome} />
               <Route path="/login" component={Login} />
-              <Route exact path="/dashboard" component={Dashboard} />
+              <Route exact path="/dashboard" component={Dashboard} user={props} />
               <NewNote exact path="/newNote" component={NewNote} />
           </Switch>
         </Router>

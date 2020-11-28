@@ -11,7 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\notable-be\\src\\server.js"
+            "program": "${workspaceFolder}/notable-be/src/routes.js"
         }
     ]
 }

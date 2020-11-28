@@ -1,4 +1,4 @@
-﻿import React from 'react';
+﻿import React, {useEffect} from 'react';
 import Dashboard from './dashboard';
 import Popup from 'reactjs-popup';
 import './Styles/App.css';
@@ -8,22 +8,30 @@ const axios = require('axios');
 
 
 
-export default function Login() {
+export default function Login(props) {
   //Permit and togglePermit are used for access control
   var permit = useLogin();
-  var togglePermit = useUpdateLogin();
+  const togglePermit = useUpdateLogin();
   //Used to store the userInfo in a state. May do this differently though.
   var userInfo = useUserInfo();
-  // const setUserInfo = useUpdateUserInfo();
-  
+
   const history = useHistory(); //Could this be made in ThemeContext?
-  
+
+  //Keeps the user logged out if they came back from a different page
+  useEffect(() => {
+      togglePermit()
+  }, [userInfo])
+
+
   const login = () => {
     console.log("I'm in login!");
+    
     // obtain users username and password
     var user = document.getElementById("username").value;
     var password = document.getElementById("password").value;
+
     //TODO: Check the data for SQL injection before performing query. Give error message if user and password are bad.
+    //The above TODO is handled on backend, but there is no fix for user to handle bad userName or Password because the backend crashes.
 
 
     // Check if user is in db
@@ -41,16 +49,19 @@ export default function Login() {
           userInfo = response.data;
           console.log(response.data);
           console.log(userInfo);
-          //Use togglePermit to change it to true 
-          permit = togglePermit;
+          //Use togglePermit to change it to true
+          console.log(permit);
+          if(permit===false)
+          togglePermit();
+          console.log("In Login");
+          console.log(permit);
           //and send them to the Dashboard.
-          if(permit){
-            let path= '/dashboard';
-            history.push({pathname:path, state:{user:userInfo}});
-          }
-        }, (error) => {
+          let path= '/dashboard';
+          history.push({pathname:path, state:{user:userInfo}});      
+          }, (error) => {
           // Use message.js to display some error message to the user telling them to try again or signup
           console.log(error);
+          alert("Your password or username was incorrect.\nPlease try again")
         });
       } else {
         alert("Please enter a password.");
@@ -68,20 +79,15 @@ export default function Login() {
     document.getElementById('login').style.display ='none';
   }
 
-  return permit ?(
-    <div>
-      {/* Send them to dashboard */}
-      {/* <Dashboard user={userInfo} /> */}
-      {/* May not need to push a state since there is the global userInfo, but not sure yet */}
-      {/* <Redirect to={{
-        pathname='/dashboard',
-        state={user:userInfo}
-        }} /> */}
-        {/* May not need to push a state since there is the global userInfo, but not sure yet */}
-      {() => {let path = '/dashboard'; history.push({pathname:path, state:{user:userInfo}})}}
-    </div>
-  ):(
+  return (
     // Show login button
+    <>
+    <h1>Notable</h1>
+      <h3>
+      Make your notes more notable!
+      <br/><br/>Login below!<br/><br/>
+      </h3>
+      
     <Popup
         trigger={<button id="login-button" className="home-button" > Login </button>}
         modal
@@ -114,5 +120,6 @@ export default function Login() {
               </button>
           </div>
       </Popup>
+      </>
   );
 }
