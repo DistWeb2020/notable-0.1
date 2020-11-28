@@ -141,7 +141,6 @@ function NewNote(props) {
           {/* Fix the styling later */}
       {/* </div> */}
       <h1>New Note</h1>
-      <br></br><br></br>
       <table>
         <tr>
           <td>
