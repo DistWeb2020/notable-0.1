@@ -150,7 +150,7 @@ function NewNote(props) {
 
           <td id="lside">
             Fonts:&nbsp; &nbsp;
-            <select id="fontSelect" onChange={changeTextVisual}>
+            <select id="fontSelect"className="fontDrop" onChange={changeTextVisual}>
               <option value="Times">Times</option>
               <option value="Georgia">Georgia</option>
               <option value="Arial">Arial</option>
@@ -159,17 +159,17 @@ function NewNote(props) {
             <br /><br />
 
             Size:&nbsp;&nbsp;
-            <select id="sizeSelect" onChange={changeTextVisual}>
+            <select id="sizeSelect" className="sizeDrop" onChange={changeTextVisual}>
               <option value="11">11</option>
               <option value="12">12</option>
               <option value="15">15</option>
               <option value="20">20</option>
             </select>
             <br /><br />
-            <input type="checkbox" id="bold" onChange={changeTextVisual} />
+            <input type="checkbox" className="checkbox" id="bold" onChange={changeTextVisual} />
             <label for="bold">Bold</label>
             <br /><br />
-            <input type="checkbox" id="italics" onChange={changeTextVisual} />
+            <input type="checkbox" className="checkbox" id="italics" onChange={changeTextVisual} />
             <label for="italics">Italics</label>
             <br /><br />
             <button className='save' onClick={save}>Save</button>

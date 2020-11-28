@@ -107,16 +107,16 @@ export default function Login(props) {
               <br /><br />
               {/* You need to make this button send you to the dashboard when verifyLogin is succesful */}
               {/* <button onClick={ this.verifyLogin }>Login</button> */}
-              <button onClick={ login }>Login</button>
+              <button className="popLog" onClick={ login }>Login</button>
             </div>
             <button
-                className="button"
+                className="popClose"
                 onClick={() => {
                   console.log('modal closed ');
                   close();
                 }}
               >
-                close
+                Close
               </button>
           </div>
       </Popup>
