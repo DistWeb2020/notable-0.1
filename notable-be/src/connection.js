@@ -10,15 +10,4 @@ let pool = mysql.createPool({
   queueLimit: 0
 });
 
-// //example code
-// pool.getConnection(function(err, conn) {
-
-//   // Do something with the connection
-//   conn.query('SELECT * FROM user',  function(err, results, fields) {
-//     console.log(results); 
-//   });
-//   // release the connection when finished
-//   pool.releaseConnection(conn);
-// })
-
 module.exports = pool;
