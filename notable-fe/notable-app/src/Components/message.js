@@ -4,14 +4,10 @@
 
 import React from 'react';
 import './Styles/App.css';
-import { Redirect } from 'react-router-dom';
-// import Main from './main';
 import Popup from 'reactjs-popup';
 
 const axios = require( 'axios' );
 
-// const xhttp = new XMLHttpRequest();
-// var response = {};
 class Message extends React.Component {
   constructor( props ) {
     super( props );
@@ -45,7 +41,6 @@ class Message extends React.Component {
           <button
             className="button"
             onClick={ () => {
-              console.log( 'modal closed ' );
               this.close();
             } }
           >

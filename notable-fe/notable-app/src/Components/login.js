@@ -2,8 +2,8 @@
 import Dashboard from './dashboard';
 import Popup from 'reactjs-popup';
 import './Styles/App.css';
-import {Redirect, useHistory} from 'react-router-dom';
-import {useLogin, useUpdateLogin, useUpdateUserInfo, useUserInfo} from './loginContext';
+import {useHistory} from 'react-router-dom';
+import {useLogin, useUpdateLogin, useUserInfo} from './loginContext';
 const axios = require('axios');
 
 
@@ -24,7 +24,6 @@ export default function Login(props) {
 
 
   const login = () => {
-    console.log("I'm in login!");
     
     // obtain users username and password
     var user = document.getElementById("username").value;
@@ -47,20 +46,14 @@ export default function Login(props) {
           //Put response.data in the userInfo state since the user is in the db
           // setUserInfo(response.data);
           userInfo = response.data;
-          console.log(response.data);
-          console.log(userInfo);
           //Use togglePermit to change it to true
-          console.log(permit);
           if(permit===false)
           togglePermit();
-          console.log("In Login");
-          console.log(permit);
           //and send them to the Dashboard.
           let path= '/dashboard';
           history.push({pathname:path, state:{user:userInfo}});      
           }, (error) => {
           // Use message.js to display some error message to the user telling them to try again or signup
-          console.log(error);
           alert("Your password or username was incorrect.\nPlease try again")
         });
       } else {
@@ -112,7 +105,6 @@ export default function Login(props) {
             <button
                 className="popClose"
                 onClick={() => {
-                  console.log('modal closed ');
                   close();
                 }}
               >

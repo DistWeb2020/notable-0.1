@@ -11,22 +11,7 @@ export default function Welcome(props) {
   const userInfo = useUserInfo();
   const togglePermit = useUpdateLogin();
   
-  const history = useHistory(); //Could this be made in ThemeContext?
-
-  //Actually probably don't need this
-  // const sendToLogin = () => {
-  //   if(!permit){
-  //     let path= '/login';
-  //     history.push(path);
-  //   }
-  // }
-  console.log("In Welcome");
-  console.log(permit);
-
-  // function goToDashboard() {
-  //   let path='/dashboard'; 
-  //   history.push({pathname:path, state:{user:userInfo}});
-  // }
+  const history = useHistory();
 
   return permit===true?(
     <div>

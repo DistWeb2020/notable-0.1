@@ -59,9 +59,11 @@ function NewNote(props) {
         document.getElementById("name").value = notes[index].noteName;
         document.getElementById("noteText").value = notes[index].text;
 
-      }, (error) => {
-        console.log(error);
-      });
+      }
+      // , (error) => {
+      //   console.log(error);
+      // }
+      );
   }
 
   //Save button
@@ -91,9 +93,9 @@ function NewNote(props) {
         date: date,
         img: ""
       })
-        .then((response) => {
-          console.log(response);
-        })    
+        // .then((response) => {
+        //   console.log(response);
+        // })    
     } else {
 
       //send update to note
@@ -102,9 +104,9 @@ function NewNote(props) {
         text: text,
         name: name
       })
-        .then((response) => {
-          console.log(response);
-        })
+        // .then((response) => {
+        //   console.log(response);
+        // })
     }
   }
 
@@ -139,7 +141,7 @@ function NewNote(props) {
           {/* Fix the styling later */}
       {/* </div> */}
       <h1>New Note</h1>
-      <br></br>
+      <br></br><br></br>
       <table>
         <tr>
           <td>
@@ -149,8 +151,8 @@ function NewNote(props) {
           </td>
 
           <td id="lside">
-            Fonts:&nbsp; &nbsp;
-            <select id="fontSelect"className="fontDrop" onChange={changeTextVisual}>
+            Fonts:&nbsp;
+            <select id="fontSelect" className="fontDrop" onChange={changeTextVisual}>
               <option value="Times">Times</option>
               <option value="Georgia">Georgia</option>
               <option value="Arial">Arial</option>
@@ -158,8 +160,8 @@ function NewNote(props) {
             </select>
             <br /><br />
 
-            Size:&nbsp;&nbsp;
-            <select id="sizeSelect" onChange={changeTextVisual}>
+            Size:&nbsp;
+            <select id="sizeSelect" className="fontDrop" onChange={changeTextVisual}>
               <option value="20">20</option>
               <option value="34">34</option>
               <option value="50">50</option>

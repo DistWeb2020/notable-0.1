@@ -1,6 +1,6 @@
 import React from 'react';
 import './Styles/App.css';
-import {Link, Route, Redirect} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 function NavNLI() {
   return (
       <nav className="my-nav">
