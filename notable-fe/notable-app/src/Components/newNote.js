@@ -8,10 +8,12 @@ const axios = require('axios');
 function NewNote(props) {
   //Retrieve logged in user and the noteID of the note to edit
   const [user, setUser] = useState(props.location.state.user);
+  //Make sure initial isn't null. Like from a reload. Rename this dataID. This is how you know what note you are dealing with
   const [noteID, setNoteID] = useState(props.location.state.noteID);
   
   //Local variables to hold previous information
   var localUser = user;
+  //Make a boolean
   var localNoteID;
 
   //A noteID must be greater than 0
@@ -38,8 +40,10 @@ function NewNote(props) {
     var index;
 
     //Get request for data
+    //Change route to /notes/content
     axios.get('http://localhost:8000/notes', {
       params: {
+        //This should be the user from the dashboard
         userid: 1
       }
     })
@@ -82,6 +86,7 @@ function NewNote(props) {
     if (name.length == 0) {
       alert("Please give your note a name")
 
+    //Change conditional to deal with boolean
     //check if we are creating new note or editing
     } else if (localNoteID == -1) {
 
@@ -93,7 +98,9 @@ function NewNote(props) {
         date: date,
         img: ""
       })
+        //Add alert to tell user note is saved
         // .then((response) => {
+        //   Let user know that their note has been saved somehow
         //   console.log(response);
         // })    
     } else {
@@ -104,6 +111,7 @@ function NewNote(props) {
         text: text,
         name: name
       })
+        //Add alert to tell user note is saved
         // .then((response) => {
         //   console.log(response);
         // })
@@ -140,6 +148,7 @@ function NewNote(props) {
       {/* <div className="container">
           {/* Fix the styling later */}
       {/* </div> */}
+      {/* (bool?<h1>Edit Note</h1>:<h1>New Note</h1>) */}
       <h1>New Note</h1>
       <table>
         <tr>

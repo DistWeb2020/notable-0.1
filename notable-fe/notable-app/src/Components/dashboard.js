@@ -11,7 +11,8 @@ const axios = require('axios');
 
 
 export default function Dashboard(props) {
-
+	//If user refreshes page the props kind of disappear. Causes a crash.
+	//Need to set up a case for when props.location.state.user is null and find out who the current user is.
 	var userInfo = useUserInfo();
 	const [user, setUser] = useState(props.location.state.user); //Use this or the state that is passed form the redirect?
 	const [note, setNote] = useState(0);
@@ -97,7 +98,7 @@ export default function Dashboard(props) {
 								<br></br><br></br>
 								<button className="editButton" onClick={() => {
 									let path = "/newNote";
-									history.push({pathname:path, state:{noteID: noteID, user: user}})
+									history.push({pathname:path, state:{dataID: noteID, user: user}}) {/*This is actually the dataID not the noteID*/}
 								
 								}}> Edit Note </button> < br />< br />
 								<textarea id="notePreview" readOnly={true} className="notePreview"></textarea>
