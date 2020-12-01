@@ -95,7 +95,7 @@ export default function Dashboard(props) {
 								Preview of &nbsp;
 								<label id="noteName" style={{fontWeight: "bold"}}> </label>
 								<br></br><br></br>
-								 <button className="editButton" onClick={() => {
+								<button className="editButton" onClick={() => {
 									let path = "/newNote";
 									history.push({pathname:path, state:{noteID: noteID, user: user}})
 								
