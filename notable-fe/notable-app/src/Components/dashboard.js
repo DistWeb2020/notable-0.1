@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 const axios = require('axios');
 
 
-export default function Dashboard(props) {
+export default function Dashboard() {
 	//If user refreshes page the props kind of disappear. Causes a crash.
 	//Need to set up a case for when props.location.state.user is null and find out who the current user is.
 	const [user, setUser] = useUserContext();

@@ -7,7 +7,7 @@ import { Redirect, useHistory } from 'react-router-dom';
 
 const axios = require( 'axios' );
 
-function NewNote( props ) {
+function NewNote() {
   const history = useHistory();
   const [permit, setPermit] = useLogin();
   if(permit===false){

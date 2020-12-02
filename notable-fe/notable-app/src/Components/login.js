@@ -2,28 +2,22 @@
 import Dashboard from './dashboard';
 import Popup from 'reactjs-popup';
 import './Styles/App.css';
-import {useHistory} from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router-dom';
 import {useLogin, useUpdateLogin, useUserContext} from './loginContext';
 const axios = require('axios');
 
 
 
-export default function Login(props) {
-  //Permit and togglePermit are used for access control
-  // var permit = useLogin();
+export default function Login() {
   const [permit, setPermit] = useLogin();
-  // const togglePermit = useUpdateLogin();
-  //Used to store the userInfo in a state. May do this differently though.
-  // var userInfo = useUserInfo();
   //Get the global state from loginContext
   const [userInfo, setUserInfo] = useUserContext();
   const history = useHistory(); //Could this be made in ThemeContext?
-
-  //Keeps the user logged out if they came back from a different page
-  // useEffect(() => {
-  //     togglePermit()
-  // }, [userInfo])
-  window.onpageshow = function(evt) { if (evt.persisted){ window.history.back(); setPermit(false) }}
+  var location = useLocation();
+  // Keeps the user logged out if they try to use forward button in the browser
+  useEffect(() => {
+    setPermit(false);
+  }, [location])
 
   const login = () => {
     
