@@ -84,9 +84,12 @@ export default function Dashboard() {
 										<thead></thead>
 										<tbody>
 											{user.userInfo.notes.map(note => (
+												<>
 												<tr>
-													<td onClick={() => setNote(note.dataid)}>{note.name}</td>
+													<td className="note-list" onClick={() => setNote(note.dataid)}>{note.name}</td>
 												</tr>
+												<tr><hr className="note-list-hr"/></tr>
+												</>
 											))}
 										</tbody>
 									</table>

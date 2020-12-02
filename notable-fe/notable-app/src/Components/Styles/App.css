@@ -373,3 +373,12 @@ div.newNote {
   border-radius: 18px;
   border: 1px solid #cfcece;
 }
+
+.note-list{
+  font-weight: 500;
+  font-size: medium;
+}
+
+.note-list-hr{
+  width: 100%;
+}
