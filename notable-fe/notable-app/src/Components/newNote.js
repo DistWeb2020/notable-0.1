@@ -9,7 +9,7 @@ function NewNote( props ) {
   //Retrieve logged in user and the noteID of the note to edit
   const [ user, setUser ] = useState( props.location.state.user );
   //Make sure initial isn't null. Like from a reload. Rename this dataID. This is how you know what note you are dealing with
-  const [ noteID, setNoteID ] = useState( props.location.state.noteID );
+  const [ dataID, setDataID ] = useState( props.location.state.dataID );
   //Local variables to hold previous information
   var localUser = user;
   //Make a boolean. Change it when we know we are editing an existing note
@@ -17,9 +17,9 @@ function NewNote( props ) {
   var localNoteID;
 
   //A noteID must be greater than 0
-  if ( noteID > 0 ) {
+  if ( dataID > 0 ) {
     //Assign value to local variable
-    localNoteID = noteID;
+    localNoteID = dataID;
   } else {
     //Set val to -1 to indicate new note
     localNoteID = -1;
@@ -31,7 +31,7 @@ function NewNote( props ) {
   var date;
 
   //Local variable to store get response
-  var notes;
+  var note;
 
   //Only enter if we are editing a note
   if ( localNoteID != -1 ) {
@@ -41,32 +41,33 @@ function NewNote( props ) {
 
     //Get request for data
     //Change route to /notes/content
-    axios.get( 'http://localhost:8000/notes', {
+    axios.get( 'http://localhost:8000/note/content', {
       params: {
         //This should be the user from the dashboard
-        userid: 1
+        dataid: dataID
       }
     } )
       .then( ( response ) => {
-
+        console.log(dataID);
         //Assign response to local variable
-        notes = response.data;
-
+        note = response.data;
+        console.log(note);
         //Loop through a users notes and find one with matching noteID
-        for ( var i = 0; i < notes.length; i++ ) {
-          if ( notes[ i ].noteid == localNoteID ) {
-            index = i;
-          }
-        }
+        // for ( var i = 0; i < notes.length; i++ ) {
+        //   if ( notes[ i ].noteid == localNoteID ) {
+        //     index = i;
+        //   }
+        // }
 
         //Populate UI with name and text of note
-        document.getElementById( "name" ).value = notes[ index ].noteName;
-        document.getElementById( "noteText" ).value = notes[ index ].text;
+        document.getElementById( "name" ).value = note[0].name;
+        document.getElementById( "noteText" ).value = note[0].text;
 
       }
-        // , (error) => {
-        //   console.log(error);
-        // }
+        , (error) => {
+          alert("Could not retrieve your note right now.\nThe server is probably down.");
+          console.log(error);
+        }
       );
   }
 
@@ -107,7 +108,7 @@ function NewNote( props ) {
 
       //send update to note
       axios.post( 'http://localhost:8000/update', {
-        noteid: localNoteID,
+        noteid: note[0].noteid,
         text: text,
         name: name
       } )

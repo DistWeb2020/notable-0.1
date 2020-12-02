@@ -20,7 +20,7 @@ export default function Dashboard(props) {
 	const permit = useLogin(); //Should use only if the user for some reason can still get to this route if they just typed it in, which is likely
 	const history = useHistory(); 
 
-	var noteID;
+	var dataID;
 
 	useEffect(() => {
 
@@ -35,7 +35,7 @@ export default function Dashboard(props) {
 					document.getElementById("notePreview").textContent = response.data[0].text;
 					document.getElementById("noteName").textContent = response.data[0].name;
 
-					noteID = response.data[0].noteid;
+					dataID = response.data[0].dataref;
 				})
 		}
 	});
@@ -98,7 +98,7 @@ export default function Dashboard(props) {
 								<br></br><br></br>
 								<button className="editButton" onClick={() => {
 									let path = "/newNote";
-									history.push({pathname:path, state:{noteID: noteID, user: user}}) 
+									history.push({pathname:path, state:{dataID: dataID, user: user}}) 
 									{/*This is actually the dataID not the noteID*/}
 								
 								}}> Edit Note </button> < br />< br />
