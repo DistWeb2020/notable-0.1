@@ -98,7 +98,8 @@ export default function Dashboard(props) {
 								<br></br><br></br>
 								<button className="editButton" onClick={() => {
 									let path = "/newNote";
-									history.push({pathname:path, state:{dataID: noteID, user: user}}) {/*This is actually the dataID not the noteID*/}
+									history.push({pathname:path, state:{noteID: noteID, user: user}}) 
+									{/*This is actually the dataID not the noteID*/}
 								
 								}}> Edit Note </button> < br />< br />
 								<textarea id="notePreview" readOnly={true} className="notePreview"></textarea>
