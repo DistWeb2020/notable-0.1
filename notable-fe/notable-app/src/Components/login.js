@@ -3,24 +3,26 @@ import Dashboard from './dashboard';
 import Popup from 'reactjs-popup';
 import './Styles/App.css';
 import {useHistory} from 'react-router-dom';
-import {useLogin, useUpdateLogin, useUserInfo} from './loginContext';
+import {useLogin, useUpdateLogin, useUserContext} from './loginContext';
 const axios = require('axios');
 
 
 
 export default function Login(props) {
   //Permit and togglePermit are used for access control
-  var permit = useLogin();
-  const togglePermit = useUpdateLogin();
+  // var permit = useLogin();
+  const [permit, setPermit] = useLogin();
+  // const togglePermit = useUpdateLogin();
   //Used to store the userInfo in a state. May do this differently though.
-  var userInfo = useUserInfo();
-
+  // var userInfo = useUserInfo();
+  //Get the global state from loginContext
+  const [userInfo, setUserInfo] = useUserContext();
   const history = useHistory(); //Could this be made in ThemeContext?
 
   //Keeps the user logged out if they came back from a different page
-  useEffect(() => {
-      togglePermit()
-  }, [userInfo])
+  // useEffect(() => {
+  //     togglePermit()
+  // }, [userInfo])
 
 
   const login = () => {
@@ -45,10 +47,17 @@ export default function Login(props) {
         .then((response) => {
           //Put response.data in the userInfo state since the user is in the db
           // setUserInfo(response.data);
-          userInfo = response.data;
+          setUserInfo(userInfo => ({
+            ...userInfo,
+            // Notes is actually whatever is contained in the response. That response has more than just notes
+            userInfo: response.data
+          }))
+          setPermit(true);
+          // togglePermit();
+          console.log(response.data);
           //Use togglePermit to change it to true
-          if(permit===false)
-          togglePermit();
+          // if(permit===false)
+          // togglePermit();
           //and send them to the Dashboard.
           let path= '/dashboard';
           history.push({pathname:path, state:{user:userInfo}});      

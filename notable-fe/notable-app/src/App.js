@@ -22,6 +22,7 @@ export default function App(props) {
           <Switch>
               <Route exact path="/" component={Welcome} />
               <Route path="/login" component={Login} />
+              {/* Hopefully we won't have to pass the user as a prop here anymore */}
               <Route exact path="/dashboard" component={Dashboard} user={props} />
               <NewNote exact path="/newNote" component={NewNote} />
           </Switch>

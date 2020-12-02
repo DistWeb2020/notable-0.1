@@ -2,16 +2,18 @@
 import './Styles/App.css';
 import Nav from './nav';
 import { useState } from 'react';
+import { useUserContext } from './loginContext';
 
 const axios = require( 'axios' );
 
 function NewNote( props ) {
   //Retrieve logged in user and the noteID of the note to edit
-  const [ user, setUser ] = useState( props.location.state.user );
+  const [user, setUser] = useUserContext();
+  // const [ user, setUser ] = useState( props.location.state.user );
   //Make sure initial isn't null. Like from a reload. Rename this dataID. This is how you know what note you are dealing with
   const [ dataID, setDataID ] = useState( props.location.state.dataID );
   //Local variables to hold previous information
-  var localUser = user;
+  var localUser = user.userInfo;
   //Make a boolean. Change it when we know we are editing an existing note
   var editNote = false;
   var localNoteID;
@@ -102,6 +104,15 @@ function NewNote( props ) {
         //Add alert to tell user note is saved
         .then( ( response ) => {
           alert( "Your note has been saved!" );
+          localUser.notes.push({"dataid": localUser.dataid+1,
+          "user": localUser.userid,
+          "date": date,
+          "name": name});
+          setUser(userInfo => ({
+            ...userInfo,
+            userInfo: localUser
+          }))
+          //append new note info to localUser.notes
           //Once current note is saved shoud update bool to be updating current note
         } )
     } else {

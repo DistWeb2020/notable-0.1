@@ -1,15 +1,15 @@
 import React, {useEffect} from 'react'
 import {Redirect, useHistory} from 'react-router-dom';
-import {useLogin, useUpdateLogin, useUserInfo, useUpdateUserInfo} from './loginContext';
+import {useLogin, useUpdateLogin, useUpdateUserInfo} from './loginContext';
 
 import NavNLI from './nav-notLoggedIn';
 import Login from './login';
 
 
 export default function Welcome(props) {
-  const permit = useLogin();
-  const userInfo = useUserInfo();
-  const togglePermit = useUpdateLogin();
+  const [permit, setPermit] = useLogin();
+  // const userInfo = useUserInfo();
+  // const togglePermit = useUpdateLogin();
   
   const history = useHistory();
 

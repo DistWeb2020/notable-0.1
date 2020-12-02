@@ -5,7 +5,7 @@ import Nav from './nav';
 import NewNote from './newNote';
 import {Prompt} from 'react-router-dom';
 import { Component, useState } from 'react';
-import { useLogin, useUserInfo, useUpdateLogin } from './loginContext';
+import { useLogin, useUserContext } from './loginContext';
 import { useEffect } from 'react';
 const axios = require('axios');
 
@@ -13,11 +13,12 @@ const axios = require('axios');
 export default function Dashboard(props) {
 	//If user refreshes page the props kind of disappear. Causes a crash.
 	//Need to set up a case for when props.location.state.user is null and find out who the current user is.
-	var userInfo = useUserInfo();
-	const [user, setUser] = useState(props.location.state.user); //Use this or the state that is passed form the redirect?
+	const [user, setUser] = useUserContext();
+	// const [user, setUser] = useState(props.location.state.user); //Use this or the state that is passed form the redirect?
 	const [note, setNote] = useState(0);
 
-	const permit = useLogin(); //Should use only if the user for some reason can still get to this route if they just typed it in, which is likely
+	const [permit, setPermit] = useLogin();
+	// const permit = useLogin(); //Should use only if the user for some reason can still get to this route if they just typed it in, which is likely
 	const history = useHistory(); 
 
 	var dataID;
@@ -40,11 +41,10 @@ export default function Dashboard(props) {
 		}
 	});
 
-	const togglePermit = useUpdateLogin();
-	
-	window.onbeforeunload = function () {
-		togglePermit();
-  }
+	//Figure out how to change permit to false when user goes back to login page
+	// window.onbeforeunload = function () {
+	// 	setPermit(false);
+  // }
 
 
 	return permit===false? (
@@ -67,7 +67,7 @@ export default function Dashboard(props) {
 			<div className="dashboard">
 				<Nav user={user} />
 				<title>Dashboard</title>
-				<h1 className="greeting">Hello {user.firstname} {user.lastname}!</h1>
+				<h1 className="greeting">Hello {user.userInfo.firstname} {user.userInfo.lastname}!</h1>
 				<table cellPadding="0px">
 					<tr>
 						<td>
@@ -80,7 +80,7 @@ export default function Dashboard(props) {
 										{/* May want to make the element within the td a button instead of just text. Unless an onClick is available for td. */}
 										<thead></thead>
 										<tbody>
-											{user.notes.map(note => (
+											{user.userInfo.notes.map(note => (
 												<tr>
 													<td onClick={() => setNote(note.dataid)}>{note.name}</td>
 												</tr>
