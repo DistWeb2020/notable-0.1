@@ -23,7 +23,7 @@ export default function Login(props) {
   // useEffect(() => {
   //     togglePermit()
   // }, [userInfo])
-
+  window.onpageshow = function(evt) { if (evt.persisted){ window.history.back(); setPermit(false) }}
 
   const login = () => {
     
@@ -54,7 +54,7 @@ export default function Login(props) {
           }))
           setPermit(true);
           // togglePermit();
-          console.log(response.data);
+          // console.log(response.data);
           //Use togglePermit to change it to true
           // if(permit===false)
           // togglePermit();
@@ -84,6 +84,7 @@ export default function Login(props) {
   return (
     // Show login button
     <>
+
     <h1>Notable</h1>
       <h3>
       Make your notes more notable!

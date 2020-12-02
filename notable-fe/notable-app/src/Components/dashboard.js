@@ -35,8 +35,11 @@ export default function Dashboard(props) {
 				.then((response) => {
 					document.getElementById("notePreview").textContent = response.data[0].text;
 					document.getElementById("noteName").textContent = response.data[0].name;
-
 					dataID = response.data[0].dataref;
+					setUser(userInfo => ({
+						...userInfo,
+						currentDataID: dataID
+					}))
 				})
 		}
 	});
@@ -98,7 +101,7 @@ export default function Dashboard(props) {
 								<br></br><br></br>
 								<button className="editButton" onClick={() => {
 									let path = "/newNote";
-									history.push({pathname:path, state:{dataID: dataID, user: user}}) 
+									history.push({pathname:path}) 
 									{/*This is actually the dataID not the noteID*/}
 								
 								}}> Edit Note </button> < br />< br />

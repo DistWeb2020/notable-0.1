@@ -2,16 +2,22 @@
 import './Styles/App.css';
 import Nav from './nav';
 import { useState } from 'react';
-import { useUserContext } from './loginContext';
+import { useLogin, useUserContext } from './loginContext';
+import { Redirect, useHistory } from 'react-router-dom';
 
 const axios = require( 'axios' );
 
 function NewNote( props ) {
+  const history = useHistory();
+  const [permit, setPermit] = useLogin();
+  if(permit===false){
+    history.push('/');
+  }
   //Retrieve logged in user and the noteID of the note to edit
   const [user, setUser] = useUserContext();
   // const [ user, setUser ] = useState( props.location.state.user );
   //Make sure initial isn't null. Like from a reload. Rename this dataID. This is how you know what note you are dealing with
-  const [ dataID, setDataID ] = useState( props.location.state.dataID );
+  const [ dataID, setDataID ] = useState( user.currentDataID );
   //Local variables to hold previous information
   var localUser = user.userInfo;
   //Make a boolean. Change it when we know we are editing an existing note
@@ -52,7 +58,7 @@ function NewNote( props ) {
       .then( ( response ) => {
         console.log(dataID);
         //Assign response to local variable
-        note = response.data;
+        note = response.data; //say response.data[0] instead?
         console.log(note);
         //Loop through a users notes and find one with matching noteID
         // for ( var i = 0; i < notes.length; i++ ) {
@@ -104,7 +110,11 @@ function NewNote( props ) {
         //Add alert to tell user note is saved
         .then( ( response ) => {
           alert( "Your note has been saved!" );
-          localUser.notes.push({"dataid": localUser.dataid+1,
+          // console.log(localUser.notes[localUser.notes.length-1].dataid)
+          // console.log(localUser.notes[localUser.notes.length-1])
+          localUser.notes.push({
+            // Update with the correct dataid
+            "dataid": localUser.notes[localUser.notes.length-1].dataid+1,
           "user": localUser.userid,
           "date": date,
           "name": name});
@@ -126,6 +136,18 @@ function NewNote( props ) {
         // Add alert to tell user note is saved
         .then( ( response ) => {
           alert( "Your note has been updated and saved!" );
+          //update the note in the global state user.
+          //ACTUALLY doesn't need update. Since the actual note is queried for in dashboard. localUser.notes[i] just holds this: 
+          // "dataid": 104,
+            // "user": 5,
+            // "date": "2020-11-13T21:04:00.000Z",
+            // "name": "Suit Ideas"
+            //No actual text or names there to update. Only the date is different which could be updated...naaah
+          // localUser.notes[localUser.notes.length-1].date = date;
+          // setUser(userInfo => ({
+          //   ...userInfo,
+          //   userInfo: localUser
+          // }))
         } )
     }
   }
@@ -154,7 +176,15 @@ function NewNote( props ) {
   }
 
 
-  return (
+  return permit===false?(
+    <div>
+      {
+        <Redirect to={{
+          pathname: '/'
+        }} />
+      }
+    </div>
+  ):(
     <div className="newNote">
       <Nav user={ user } />
       {/* <div className="container">
