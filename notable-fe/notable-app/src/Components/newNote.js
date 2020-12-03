@@ -7,7 +7,7 @@ import { Redirect, useHistory } from 'react-router-dom';
 
 const axios = require( 'axios' );
 
-function NewNote() {
+function NewNote(props) {
   const history = useHistory();
   const [permit, setPermit] = useLogin();
   if(permit===false){
@@ -17,11 +17,18 @@ function NewNote() {
   const [user, setUser] = useUserContext();
   // const [ user, setUser ] = useState( props.location.state.user );
   //Make sure initial isn't null. Like from a reload. Rename this dataID. This is how you know what note you are dealing with
-  const [ dataID, setDataID ] = useState( user.currentDataID );
+  var currentDataID;
+  if(props.location.state.newNote===true){
+    console.log(props.location.state.newNote);
+    currentDataID = 0;
+  } else {
+    currentDataID = user.currentDataID;
+  }
+  const [ dataID, setDataID ] = useState( currentDataID );
   //Local variables to hold previous information
   var localUser = user.userInfo;
   //Make a boolean. Change it when we know we are editing an existing note
-  var editNote = false;
+  var editNote = true;
   var localNoteID;
 
   //A noteID must be greater than 0
@@ -31,6 +38,7 @@ function NewNote() {
   } else {
     //Set val to -1 to indicate new note
     localNoteID = -1;
+    editNote = false;
   }
 
   //Store information about note

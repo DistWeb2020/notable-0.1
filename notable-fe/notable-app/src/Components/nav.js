@@ -1,7 +1,10 @@
 import React from 'react';
 import './Styles/App.css';
 import {Link} from 'react-router-dom';
+// import {useLogin, useUserContext} from './loginContext';
 function Nav() {
+  // const [user, setUser] = useUserContext();
+  
   return (
       <nav className="my-nav">
       <ul className="App-nav-links">
@@ -15,7 +18,8 @@ function Nav() {
             <li>Dashboard</li>
           </Link>
           <Link className="my-nav" to={{
-            pathname: "/newNote"
+            pathname: "/newNote",
+            state: {newNote: true}
           }}>
             <li>New Note</li>
           </Link>

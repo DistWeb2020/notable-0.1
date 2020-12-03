@@ -22,7 +22,8 @@ export default function Dashboard() {
 	const history = useHistory(); 
 
 	var dataID;
-
+	//Prevents on re-render when moving to another component when you click editNote
+	var movingOn = false;
 	useEffect(() => {
 
 		//retrieve the note and set the text preview 
@@ -33,6 +34,7 @@ export default function Dashboard() {
 				}
 			})
 				.then((response) => {
+					if(movingOn===false){
 					document.getElementById("notePreview").textContent = response.data[0].text;
 					document.getElementById("noteName").textContent = response.data[0].name;
 					dataID = response.data[0].dataref;
@@ -40,9 +42,10 @@ export default function Dashboard() {
 						...userInfo,
 						currentDataID: dataID
 					}))
+				}
 				})
 		}
-	});
+	}, [note]);
 
 	//Figure out how to change permit to false when user goes back to login page
 	// window.onbeforeunload = function () {
@@ -104,7 +107,8 @@ export default function Dashboard() {
 								<br></br><br></br>
 								<button className="editButton" onClick={() => {
 									let path = "/newNote";
-									history.push({pathname:path}) 
+									movingOn = true;
+									history.push({pathname:path,state:{newNote:false}});
 									{/*This is actually the dataID not the noteID*/}
 								
 								}}> Edit Note </button> < br />< br />

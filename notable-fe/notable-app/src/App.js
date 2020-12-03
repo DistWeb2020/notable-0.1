@@ -1,9 +1,8 @@
-import React, {useContext, createContext, useState} from 'react';
-import {Redirect, Link, Switch, Route, useHistory, useLocation, BrowserRouter as Router} from 'react-router-dom';
+import React from 'react';
+import {Switch, Route, BrowserRouter as Router} from 'react-router-dom';
 import './Components/Styles/App.css';
 import Dashboard from './Components/dashboard';
 import NewNote from './Components/newNote';
-import Message from './Components/message';
 import { LoginProvider } from './Components/loginContext';
 import Welcome from './Components/welcome';
 import Login from './Components/login';

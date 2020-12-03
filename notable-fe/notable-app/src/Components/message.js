@@ -2,6 +2,10 @@
 // something needs to be told to the user.
 // Espicially errors.
 
+//************************************
+//This component was not actually used. It was intended to be used, but didn't have time to implement. alert() is used instead.
+//******************************************** */
+
 import React from 'react';
 import './Styles/App.css';
 import Popup from 'reactjs-popup';
