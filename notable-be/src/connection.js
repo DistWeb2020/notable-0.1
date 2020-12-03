@@ -4,7 +4,7 @@ let mysql = require('mysql2');
 let pool = mysql.createPool({
   host: "localhost",
   user: "root",
-  password: "Computertechie2020",
+  password: "Sol1dFoundat1on!",
   database: "notable",
   connectionLimit: 10,
   queueLimit: 0

@@ -5,22 +5,25 @@ import Nav from './nav';
 import NewNote from './newNote';
 import {Prompt} from 'react-router-dom';
 import { Component, useState } from 'react';
-import { useLogin, useUserInfo, useUpdateLogin } from './loginContext';
+import { useLogin, useUserContext } from './loginContext';
 import { useEffect } from 'react';
 const axios = require('axios');
 
 
-export default function Dashboard(props) {
-
-	var userInfo = useUserInfo();
-	const [user, setUser] = useState(props.location.state.user); //Use this or the state that is passed form the redirect?
+export default function Dashboard() {
+	//If user refreshes page the props kind of disappear. Causes a crash.
+	//Need to set up a case for when props.location.state.user is null and find out who the current user is.
+	const [user, setUser] = useUserContext();
+	// const [user, setUser] = useState(props.location.state.user); //Use this or the state that is passed form the redirect?
 	const [note, setNote] = useState(0);
 
-	const permit = useLogin(); //Should use only if the user for some reason can still get to this route if they just typed it in, which is likely
+	const [permit, setPermit] = useLogin();
+	// const permit = useLogin(); //Should use only if the user for some reason can still get to this route if they just typed it in, which is likely
 	const history = useHistory(); 
 
-	var noteID;
-
+	var dataID;
+	//Prevents on re-render when moving to another component when you click editNote
+	var movingOn = false;
 	useEffect(() => {
 
 		//retrieve the note and set the text preview 
@@ -31,19 +34,23 @@ export default function Dashboard(props) {
 				}
 			})
 				.then((response) => {
+					if(movingOn===false){
 					document.getElementById("notePreview").textContent = response.data[0].text;
 					document.getElementById("noteName").textContent = response.data[0].name;
-
-					noteID = response.data[0].noteid;
+					dataID = response.data[0].dataref;
+					setUser(userInfo => ({
+						...userInfo,
+						currentDataID: dataID
+					}))
+				}
 				})
 		}
-	});
+	}, [note]);
 
-	const togglePermit = useUpdateLogin();
-	
-	window.onbeforeunload = function () {
-		togglePermit();
-  }
+	//Figure out how to change permit to false when user goes back to login page
+	// window.onbeforeunload = function () {
+	// 	setPermit(false);
+  // }
 
 
 	return permit===false? (
@@ -66,7 +73,7 @@ export default function Dashboard(props) {
 			<div className="dashboard">
 				<Nav user={user} />
 				<title>Dashboard</title>
-				<h1 className="greeting">Hello {user.firstname} {user.lastname}!</h1>
+				<h1 className="greeting">Hello {user.userInfo.firstname} {user.userInfo.lastname}!</h1>
 				<table cellPadding="0px">
 					<tr>
 						<td>
@@ -79,10 +86,13 @@ export default function Dashboard(props) {
 										{/* May want to make the element within the td a button instead of just text. Unless an onClick is available for td. */}
 										<thead></thead>
 										<tbody>
-											{user.notes.map(note => (
+											{user.userInfo.notes.map(note => (
+												<>
 												<tr>
-													<td onClick={() => setNote(note.dataid)}>{note.name}</td>
+													<td className="note-list" onClick={() => setNote(note.dataid)}>{note.name}</td>
 												</tr>
+												<tr><hr className="note-list-hr"/></tr>
+												</>
 											))}
 										</tbody>
 									</table>
@@ -95,9 +105,11 @@ export default function Dashboard(props) {
 								Preview of &nbsp;
 								<label id="noteName" style={{fontWeight: "bold"}}> </label>
 								<br></br><br></br>
-								 <button className="editButton" onClick={() => {
+								<button className="editButton" onClick={() => {
 									let path = "/newNote";
-									history.push({pathname:path, state:{noteID: noteID, user: user}})
+									movingOn = true;
+									history.push({pathname:path,state:{newNote:false}});
+									{/*This is actually the dataID not the noteID*/}
 								
 								}}> Edit Note </button> < br />< br />
 								<textarea id="notePreview" readOnly={true} className="notePreview"></textarea>

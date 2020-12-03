@@ -1,9 +1,8 @@
-import React, {useContext, createContext, useState} from 'react';
-import {Redirect, Link, Switch, Route, useHistory, useLocation, BrowserRouter as Router} from 'react-router-dom';
+import React from 'react';
+import {Switch, Route, BrowserRouter as Router} from 'react-router-dom';
 import './Components/Styles/App.css';
 import Dashboard from './Components/dashboard';
 import NewNote from './Components/newNote';
-import Message from './Components/message';
 import { LoginProvider } from './Components/loginContext';
 import Welcome from './Components/welcome';
 import Login from './Components/login';
@@ -22,6 +21,7 @@ export default function App(props) {
           <Switch>
               <Route exact path="/" component={Welcome} />
               <Route path="/login" component={Login} />
+              {/* Hopefully we won't have to pass the user as a prop here anymore */}
               <Route exact path="/dashboard" component={Dashboard} user={props} />
               <NewNote exact path="/newNote" component={NewNote} />
           </Switch>
