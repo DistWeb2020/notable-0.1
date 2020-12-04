@@ -1,9 +1,8 @@
 ﻿import React, {useEffect} from 'react';
-import Dashboard from './dashboard';
 import Popup from 'reactjs-popup';
 import './Styles/App.css';
 import {useHistory, useLocation} from 'react-router-dom';
-import {useLogin, useUpdateLogin, useUserContext} from './loginContext';
+import {useLogin, useUserContext} from './loginContext';
 const axios = require('axios');
 
 

@@ -106,7 +106,7 @@ function NewNote(props) {
       //Change conditional to deal with boolean
       //check if we are creating new note or editing
     } else if ( localNoteID == -1 ) {
-
+      console.log(localUser.userid);
       //create new note
       axios.post( 'http://localhost:8000/create', {
         user: localUser.userid,
