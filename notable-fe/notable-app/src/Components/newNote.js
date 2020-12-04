@@ -106,6 +106,7 @@ function NewNote(props) {
       //Change conditional to deal with boolean
       //check if we are creating new note or editing
     } else if ( localNoteID == -1 ) {
+      //Bug was found where after you create a new note for a user with the same name as the note of another user, if the user goes back to the dashboard to see their new note they'll see the other users note...weird
       console.log(localUser.userid);
       //create new note
       axios.post( 'http://localhost:8000/create', {
